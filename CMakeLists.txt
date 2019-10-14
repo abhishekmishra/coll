@@ -16,6 +16,7 @@ set ( COLL_VERSION_PATCH 0 )
 # Setup the list of source files
 set( COLL_SOURCES 
   src/arraylist.h
+  src/arraylist.c
   src/dummy.c
 )
 

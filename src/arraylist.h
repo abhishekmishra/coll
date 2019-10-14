@@ -5,7 +5,9 @@
 
 /**
 * ArrayList: This is a datastructure which implements the
-* abstract datatype (ADT) list.
+* abstract datatype (ADT) list, using a fixed length array.
+* The internal array is resized when it reaches capacity, and
+* it's capacity is increased.
 * 
 * A list has the following operations:
 * 1. Insert/Put at location l
@@ -19,9 +21,13 @@
 * 7. Makenull - empty the list
 * 8. First - gets the first location of the list (this is always 0 in an arraylist)
 * 9. PrintList - prints the list to the console/ to a string.
+* 10. Free - destructor/cleanup the list.
 **/
 
 #define ARRAYLIST_DEFAULT_SIZE 50
+
+#define E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY 1
+#define E_ARRAYLIST_INDEX_BEYOND_CAPACITY 2
 
 typedef void (arraylist_free_function)(void* data);
 
@@ -47,7 +53,7 @@ typedef struct arraylist_t {
 	void** array;
 	long capacity;
 	long size;
-	arraylist_free_function* free;
+	arraylist_free_function* free_fn;
 } arraylist;
 
 /**
@@ -57,7 +63,7 @@ typedef struct arraylist_t {
 * @param free the function used to free the items in the arraylist
 * @return value indicating success or falilure (0 is success)
 **/
-extern int arraylist_new(arraylist** l, arraylist_free_function* free);
+extern int arraylist_new(arraylist** l, arraylist_free_function* free_fn);
 
 /**
 * Create a new arraylist with the specified initial capacity.
@@ -67,7 +73,19 @@ extern int arraylist_new(arraylist** l, arraylist_free_function* free);
 * @param free the function used to free the items in the arraylist
 * @return value indicating success or falilure (0 is success)
 **/
-extern int arraylist_new_with_capacity(arraylist** l, long capacity, arraylist_free_function* free);
+extern int arraylist_new_with_capacity(arraylist** l, long capacity, arraylist_free_function* free_fn);
+
+/**
+* Insert item at location loc of the arraylist
+* 
+* @param l the arraylist
+* @param loc location to insert at
+* @param item item to insert
+* @return error code
+**/
+int arraylist_insert(arraylist* l, long loc, void* item);
+
+
 
 
 #endif /* ___ARRAYLIST_H___ */
