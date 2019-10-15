@@ -17,7 +17,6 @@ set ( COLL_VERSION_PATCH 0 )
 set( COLL_SOURCES 
   src/arraylist.h
   src/arraylist.c
-  src/dummy.c
 )
 
 set( COLL_TEST_SOURCES 
