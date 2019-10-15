@@ -23,7 +23,7 @@ static int group_setup(void** state) {
 	return err;
 }
 static int group_teardown(void** state) {
-	//TODO free the arraylist once function is implemented.
+	arraylist_free(intptrlist0);
 	return 0;
 }
 
@@ -32,6 +32,36 @@ static void test_arraylist_new_create_only(void** state) {
 	int err = arraylist_new(&test_l, NULL);
 	assert_int_equal(err, 0);
 }
+
+static void test_arraylist_new_create_and_free(void** state) {
+	arraylist* test_l;
+	int err = arraylist_new(&test_l, NULL);
+	
+	int* x = (int*)calloc(1, sizeof(int));
+	assert_non_null(x);
+	*x = 10;
+
+	arraylist_add(test_l, x);
+
+	assert_int_equal(err, 0);
+	arraylist_free(test_l);
+}
+
+static void test_arraylist_new_create_and_free_with_item_free(void** state) {
+	arraylist* test_l;
+	int err = arraylist_new(&test_l, free_intptr);
+
+	int* x = (int*)calloc(1, sizeof(int));
+	assert_non_null(x);
+	*x = 10;
+
+	arraylist_add(test_l, x);
+
+	assert_int_equal(err, 0);
+	arraylist_free(test_l);
+}
+
+
 
 static void test_arraylist_insert_at_beginning(void** state) {
 	for (int i = 0; i < 5; i++) {
@@ -141,6 +171,8 @@ static void test_arraylist_delete_at_beginning(void** state) {
 int arraylist_tests() {
 	const struct CMUnitTest tests[] = {
 		cmocka_unit_test(test_arraylist_new_create_only),
+		cmocka_unit_test(test_arraylist_new_create_and_free),
+		cmocka_unit_test(test_arraylist_new_create_and_free_with_item_free),
 		cmocka_unit_test(test_arraylist_insert_at_beginning),
 		cmocka_unit_test(test_arraylist_insert_at_end),
 		cmocka_unit_test(test_arraylist_insert_beyond_capacity),

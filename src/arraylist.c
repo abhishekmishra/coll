@@ -141,8 +141,10 @@ void* arraylist_get(arraylist* l, size_t loc) {
 }
 
 void arraylist_clear(arraylist* l) {
-	for (size_t i = 0; i < l->size; i++) {
-		l->free_fn(l->array[i]);
+	if (l->free_fn != NULL) {
+		for (size_t i = 0; i < l->size; i++) {
+			l->free_fn(l->array[i]);
+		}
 	}
 	l->size = 0;
 }
@@ -161,6 +163,17 @@ int arraylist_delete(arraylist* l, size_t loc) {
 	}
 	else {
 		return E_ARRAYLIST_INDEX_NOT_FOUND;
+	}
+}
+
+void arraylist_free(arraylist* l) {
+	if (l != NULL) {
+		if (l->free_fn != NULL) {
+			for (size_t i = 0; i < l->size; i++) {
+				l->free_fn(l->array[i]);
+			}
+		}
+		free(l);
 	}
 }
 
