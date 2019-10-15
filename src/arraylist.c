@@ -1,5 +1,6 @@
 #include <limits.h>
 #include "arraylist.h"
+#include <stdio.h>
 
 #define MAX_VOIDPTR_ALLOCATE (SIZE_MAX / sizeof(void*))
 

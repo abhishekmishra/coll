@@ -14,17 +14,15 @@ static int group_teardown(void** state) {
 	return 0;
 }
 
-static void test_bogus(void** state) {
-	assert_string_equal("bogus", "bogus");
-}
-
-static void test_create_arraylist(void** state) {
-
+static void test_arraylist_new_create_only(void** state) {
+	arraylist* l;
+	int err = arraylist_new(&l, NULL);
+	assert_int_equal(err, 0);
 }
 
 int arraylist_tests() {
 	const struct CMUnitTest tests[] = {
-		cmocka_unit_test(test_bogus),
+		cmocka_unit_test(test_arraylist_new_create_only),
 	};
 	return cmocka_run_group_tests_name("arraylist tests", tests,
 		group_setup, group_teardown);
