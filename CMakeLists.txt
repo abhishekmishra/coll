@@ -34,6 +34,7 @@ if (ENABLE_TESTS)
   add_executable(${COLL_TEST_PROGRAM_NAME} ${COLL_TEST_SOURCES})
   set_property(TARGET ${COLL_TEST_PROGRAM_NAME} PROPERTY C_STANDARD 11)
   include_directories( test )
+  include_directories( src )
 
   # cmocka
   find_package(cmocka CONFIG REQUIRED)
