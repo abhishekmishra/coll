@@ -47,7 +47,7 @@ int arraylist_resize(arraylist* l, size_t max) {
 	size_t new_capacity;
 
 	// if the size of the list is less than the max, then don't resize
-	if (max < l->size) {
+	if (max < l->capacity) {
 		return 0;
 	}
 
@@ -78,6 +78,7 @@ int arraylist_resize(arraylist* l, size_t max) {
 	}
 	else {
 		//reallocate array
+		printf("Expanding capacity.");
 		new_array = (void**)realloc(l->array, (new_capacity * sizeof(void*)));
 		if (new_array == NULL) {
 			return E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY;
@@ -110,7 +111,9 @@ int arraylist_set(arraylist* l, size_t loc, void* item) {
 		return E_ARRAYLIST_INDEX_BEYOND_CAPACITY;
 	}
 	if (loc < l->size) {
-		l->free_fn(l->array[loc]);
+		if (l->free_fn != NULL) {
+			l->free_fn(l->array[loc]);
+		}
 		l->array[loc] = item;
 		l->size = l->size + 1;
 	}
@@ -120,7 +123,7 @@ int arraylist_set(arraylist* l, size_t loc, void* item) {
 }
 
 void arraylist_print(arraylist* l, void (*item_print)(void* item)) {
-	printf("Printing arraylist size=%zu, capacity=%zu\n[", l->size, l->capacity);
+	printf("ArrayList size=%zu, capacity=%zu\n[", l->size, l->capacity);
 	for (size_t i = 0; i < l->size; i++) {
 		item_print(l->array[i]);
 		if (i != l->size - 1) {
