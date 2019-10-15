@@ -83,7 +83,7 @@ int arraylist_resize(arraylist* l, size_t max) {
 	}
 	else {
 		//reallocate array
-		printf("Expanding capacity.");
+		printf("Expanding capacity to %zu\n", new_capacity);
 		new_array = (void**)realloc(l->array, (new_capacity * sizeof(void*)));
 		if (new_array == NULL) {
 			return E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY;

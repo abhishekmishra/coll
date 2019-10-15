@@ -34,6 +34,10 @@ if (ENABLE_TESTS)
   set_property(TARGET ${COLL_TEST_PROGRAM_NAME} PROPERTY C_STANDARD 11)
   include_directories( test )
   include_directories( src )
+  include_directories( src )
+
+
+
 
   # cmocka
   find_package(cmocka CONFIG REQUIRED)
