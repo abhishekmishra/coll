@@ -1,6 +1,8 @@
 #include <limits.h>
 #include "arraylist.h"
 
+#define MAX_VOIDPTR_ALLOCATE (SIZE_MAX / sizeof(void*))
+
 int arraylist_new(arraylist** l, arraylist_free_function* free_fn) {
 	return arraylist_new_with_capacity(l, 0, free_fn);
 }
@@ -40,6 +42,7 @@ int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_f
 }
 
 int arraylist_resize(arraylist* l, size_t max) {
+	void** new_array;
 	size_t new_capacity;
 
 	// if the size of the list is less than the max, then don't resize
@@ -67,11 +70,61 @@ int arraylist_resize(arraylist* l, size_t max) {
 		new_capacity = max;
 	}
 
-	// if the new_capacity is 
+	// if the new_capacity is more than the total number
+	// of void* that can be contiguously allocated
+	if (new_capacity > MAX_VOIDPTR_ALLOCATE) {
+		return E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY;
+	}
+	else {
+		//reallocate array
+		new_array = (void**)realloc(l->array, (new_capacity * sizeof(void*)));
+		if (new_array == NULL) {
+			return E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY;
+		}
+		l->array = new_array;
+		l->capacity = new_capacity;
+		return 0;
+	}
 }
 
 int arraylist_insert(arraylist* l, size_t loc, void* item) {
 	if (loc > SIZE_MAX - 1) {
 		return E_ARRAYLIST_INDEX_BEYOND_CAPACITY;
 	}
+	if (arraylist_resize(l, loc)) {
+		return E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY;
+	}
+	if (loc < l->size) {
+		//need to move all items ahead by one index
+		for (size_t i = l->size; i > loc; i--) {
+			l->array[i] = l->array[i - 1];
+		}
+	}
+	l->array[loc] = item;
+	l->size = l->size + 1;
+}
+
+int arraylist_set(arraylist* l, size_t loc, void* item) {
+	if (loc > SIZE_MAX - 1) {
+		return E_ARRAYLIST_INDEX_BEYOND_CAPACITY;
+	}
+	if (loc < l->size) {
+		l->free_fn(l->array[loc]);
+		l->array[loc] = item;
+		l->size = l->size + 1;
+	}
+	else {
+		return E_ARRAYLIST_INDEX_NOT_FOUND;
+	}
+}
+
+void arraylist_print(arraylist* l, void (*item_print)(void* item)) {
+	printf("Printing arraylist size=%zu, capacity=%zu\n[", l->size, l->capacity);
+	for (size_t i = 0; i < l->size; i++) {
+		item_print(l->array[i]);
+		if (i != l->size - 1) {
+			printf(", ");
+		}
+	}
+	printf("]\n");
 }

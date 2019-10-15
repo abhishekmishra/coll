@@ -28,6 +28,7 @@
 
 #define E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY 1
 #define E_ARRAYLIST_INDEX_BEYOND_CAPACITY 2
+#define E_ARRAYLIST_INDEX_NOT_FOUND 3
 
 typedef void (arraylist_free_function)(void* data);
 
@@ -83,9 +84,25 @@ extern int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist
 * @param item item to insert
 * @return error code
 **/
-int arraylist_insert(arraylist* l, size_t loc, void* item);
+extern int arraylist_insert(arraylist* l, size_t loc, void* item);
 
+/**
+* Set the item at location loc of the arraylist.
+*
+* @param l the arraylist
+* @param loc location to insert at
+* @param item item to insert
+* @return error code
+**/
+extern int arraylist_set(arraylist* l, size_t loc, void* item);
 
+/**
+* Print the arraylist on the console.
+* @param l the arraylist
+* @param item_print fn pointer which prints a single item
+* @return void
+**/
+extern void arraylist_print(arraylist* l, void (*item_print)(void* item));
 
 
 #endif /* ___ARRAYLIST_H___ */
