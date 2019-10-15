@@ -51,8 +51,8 @@ typedef void (arraylist_free_function)(void* data);
 **/
 typedef struct arraylist_t {
 	void** array;
-	long capacity;
-	long size;
+	size_t capacity;
+	size_t size;
 	arraylist_free_function* free_fn;
 } arraylist;
 
@@ -73,7 +73,7 @@ extern int arraylist_new(arraylist** l, arraylist_free_function* free_fn);
 * @param free the function used to free the items in the arraylist
 * @return value indicating success or falilure (0 is success)
 **/
-extern int arraylist_new_with_capacity(arraylist** l, long capacity, arraylist_free_function* free_fn);
+extern int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_function* free_fn);
 
 /**
 * Insert item at location loc of the arraylist
@@ -83,7 +83,7 @@ extern int arraylist_new_with_capacity(arraylist** l, long capacity, arraylist_f
 * @param item item to insert
 * @return error code
 **/
-int arraylist_insert(arraylist* l, long loc, void* item);
+int arraylist_insert(arraylist* l, size_t loc, void* item);
 
 
 
