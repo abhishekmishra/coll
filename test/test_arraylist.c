@@ -61,8 +61,6 @@ static void test_arraylist_new_create_and_free_with_item_free(void** state) {
 	arraylist_free(test_l);
 }
 
-
-
 static void test_arraylist_insert_at_beginning(void** state) {
 	for (int i = 0; i < 5; i++) {
 		int* x = (int*)calloc(1, sizeof(int));
@@ -165,8 +163,6 @@ static void test_arraylist_delete_at_beginning(void** state) {
 	arraylist_print(intptrlist0, print_intptr);
 	arraylist_clear(intptrlist0);
 }
-
-
 
 int arraylist_tests() {
 	const struct CMUnitTest tests[] = {
