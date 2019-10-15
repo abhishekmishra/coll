@@ -131,6 +131,24 @@ extern void* arraylist_get(arraylist* l, size_t loc);
 extern void arraylist_clear(arraylist* l);
 
 /**
+* Get the item at location loc of the arraylist.
+* NOTE: Deleted item is not freed, user must free if needed.
+*
+* @param l the arraylist
+* @param loc location to insert at
+* @return item the deleted item (NULL if unable to delete or value was NULL)
+**/
+extern int arraylist_delete(arraylist* l, size_t loc);
+
+/** 
+* Free the arraylist.
+* (Calls free_fn to free existing items if provided at creation).
+*
+* @param l the arraylist
+**/
+extern void arraylist_free(arraylist* l);
+
+/**
 * Print the arraylist on the console.
 * @param l the arraylist
 * @param item_print fn pointer which prints a single item

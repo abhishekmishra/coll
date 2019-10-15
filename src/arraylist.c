@@ -15,7 +15,7 @@ int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_f
 	}
 
 	arraylist* list = (*l);
-	
+
 	// set the capacity of the newly created list
 	if (capacity >= 0 && capacity <= SIZE_MAX) {
 		if (capacity == 0) {
@@ -145,6 +145,23 @@ void arraylist_clear(arraylist* l) {
 		l->free_fn(l->array[i]);
 	}
 	l->size = 0;
+}
+
+int arraylist_delete(arraylist* l, size_t loc) {
+	void* item;
+	if (loc < l->size) {
+		if (l->free_fn != NULL) {
+			item = arraylist_get(l, loc);
+		}
+		for (size_t i = loc; i < l->size - 1; i++) {
+			l->array[i] = arraylist_get(l, i + 1);
+		}
+		l->size = l->size - 1;
+		return 0;
+	}
+	else {
+		return E_ARRAYLIST_INDEX_NOT_FOUND;
+	}
 }
 
 void arraylist_print(arraylist* l, void (*item_print)(void* item)) {

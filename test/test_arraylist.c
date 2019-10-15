@@ -44,7 +44,7 @@ static void test_arraylist_insert_at_beginning(void** state) {
 	}
 	arraylist_print(intptrlist0, print_intptr);
 	for (int i = 0; i < 5; i++) {
-		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), 4ULL-i);
+		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), 4ULL - i);
 	}
 	arraylist_clear(intptrlist0);
 }
@@ -97,7 +97,7 @@ static void test_arraylist_insert_large(void** state) {
 	arraylist_clear(intptrlist0);
 }
 
-static void test_arraylist_add(void** state) {
+static void test_arraylist_add_simple(void** state) {
 	for (int i = 0; i < 5; i++) {
 		int* x = (int*)calloc(1, sizeof(int));
 		assert_non_null(x);
@@ -113,6 +113,30 @@ static void test_arraylist_add(void** state) {
 	arraylist_clear(intptrlist0);
 }
 
+static void test_arraylist_delete_at_beginning(void** state) {
+	for (int i = 0; i < 5; i++) {
+		int* x = (int*)calloc(1, sizeof(int));
+		assert_non_null(x);
+		if (x != NULL) {
+			*x = i;
+			arraylist_add(intptrlist0, x);
+		}
+	}
+	arraylist_print(intptrlist0, print_intptr);
+	for (int i = 0; i < 5; i++) {
+		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i);
+	}
+	for (int i = 0; i < 3; i++) {
+		assert_int_equal(arraylist_delete(intptrlist0, 0), 0);
+	}
+	for (int i = 0; i < 2; i++) {
+		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i + 3ULL);
+	}
+	arraylist_print(intptrlist0, print_intptr);
+	arraylist_clear(intptrlist0);
+}
+
+
 
 int arraylist_tests() {
 	const struct CMUnitTest tests[] = {
@@ -121,7 +145,8 @@ int arraylist_tests() {
 		cmocka_unit_test(test_arraylist_insert_at_end),
 		cmocka_unit_test(test_arraylist_insert_beyond_capacity),
 		cmocka_unit_test(test_arraylist_insert_large),
-		cmocka_unit_test(test_arraylist_add),
+		cmocka_unit_test(test_arraylist_add_simple),
+		cmocka_unit_test(test_arraylist_delete_at_beginning),
 	};
 	return cmocka_run_group_tests_name("arraylist tests", tests,
 		group_setup, group_teardown);
