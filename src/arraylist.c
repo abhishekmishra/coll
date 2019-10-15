@@ -111,6 +111,10 @@ int arraylist_insert(arraylist* l, size_t loc, void* item) {
 	l->size = l->size + 1;
 }
 
+int arraylist_add(arraylist* l, void* item) {
+	return arraylist_insert(l, arraylist_length(l), item);
+}
+
 int arraylist_set(arraylist* l, size_t loc, void* item) {
 	if (loc > SIZE_MAX - 1) {
 		return E_ARRAYLIST_INDEX_BEYOND_CAPACITY;
@@ -124,6 +128,15 @@ int arraylist_set(arraylist* l, size_t loc, void* item) {
 	}
 	else {
 		return E_ARRAYLIST_INDEX_NOT_FOUND;
+	}
+}
+
+void* arraylist_get(arraylist* l, size_t loc) {
+	if (loc < l->size) {
+		return l->array[loc];
+	}
+	else {
+		return NULL;
 	}
 }
 

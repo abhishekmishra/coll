@@ -95,6 +95,16 @@ extern size_t arraylist_length(arraylist* l);
 extern int arraylist_insert(arraylist* l, size_t loc, void* item);
 
 /**
+* Insert an item at the end of the arraylist
+* equivalent to arraylist_insert(l, arraylist_length(l), item)
+*
+* @param l the arraylist
+* @param item item to insert
+* @return error code
+**/
+extern int arraylist_add(arraylist* l, void* item);
+
+/**
 * Set the item at location loc of the arraylist.
 *
 * @param l the arraylist
@@ -103,6 +113,15 @@ extern int arraylist_insert(arraylist* l, size_t loc, void* item);
 * @return error code
 **/
 extern int arraylist_set(arraylist* l, size_t loc, void* item);
+
+/**
+* Get the item at location loc of the arraylist.
+*
+* @param l the arraylist
+* @param loc location to insert at
+* @return item
+**/
+extern void* arraylist_get(arraylist* l, size_t loc);
 
 /**
 * Clear the array of all elements, but do not de-allocate.

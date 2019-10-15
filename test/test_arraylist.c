@@ -44,7 +44,7 @@ static void test_arraylist_insert_at_beginning(void** state) {
 	}
 	arraylist_print(intptrlist0, print_intptr);
 	for (int i = 0; i < 5; i++) {
-		assert_int_equal(*((int*)(intptrlist0->array[i])), 4ULL-i);
+		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), 4ULL-i);
 	}
 	arraylist_clear(intptrlist0);
 }
@@ -60,7 +60,7 @@ static void test_arraylist_insert_at_end(void** state) {
 	}
 	arraylist_print(intptrlist0, print_intptr);
 	for (int i = 0; i < 5; i++) {
-		assert_int_equal(*((int*)(intptrlist0->array[i])), i);
+		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i);
 	}
 	arraylist_clear(intptrlist0);
 }
@@ -76,13 +76,12 @@ static void test_arraylist_insert_beyond_capacity(void** state) {
 	}
 	//arraylist_print(intptrlist0, print_intptr);
 	for (int i = 0; i < 100; i++) {
-		assert_int_equal(*((int*)(intptrlist0->array[i])), i);
+		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i);
 	}
 	arraylist_clear(intptrlist0);
 }
 
 static void test_arraylist_insert_large(void** state) {
-	printf("SIZE_MAX is %zu\n", SIZE_MAX);
 	for (size_t i = 0; i < 65535; i++) {
 		int* x = (int*)calloc(1, sizeof(int));
 		assert_non_null(x);
@@ -93,7 +92,23 @@ static void test_arraylist_insert_large(void** state) {
 	}
 	//arraylist_print(intptrlist0, print_intptr);
 	for (int i = 0; i < 100; i++) {
-		assert_int_equal(*((int*)(intptrlist0->array[i])), i);
+		assert_int_equal(*((int*)arraylist_get(intptrlist0, i)), i);
+	}
+	arraylist_clear(intptrlist0);
+}
+
+static void test_arraylist_add(void** state) {
+	for (int i = 0; i < 5; i++) {
+		int* x = (int*)calloc(1, sizeof(int));
+		assert_non_null(x);
+		if (x != NULL) {
+			*x = i;
+			arraylist_add(intptrlist0, x);
+		}
+	}
+	arraylist_print(intptrlist0, print_intptr);
+	for (int i = 0; i < 5; i++) {
+		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i);
 	}
 	arraylist_clear(intptrlist0);
 }
@@ -106,6 +121,7 @@ int arraylist_tests() {
 		cmocka_unit_test(test_arraylist_insert_at_end),
 		cmocka_unit_test(test_arraylist_insert_beyond_capacity),
 		cmocka_unit_test(test_arraylist_insert_large),
+		cmocka_unit_test(test_arraylist_add),
 	};
 	return cmocka_run_group_tests_name("arraylist tests", tests,
 		group_setup, group_teardown);
