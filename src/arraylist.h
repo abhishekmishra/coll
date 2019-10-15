@@ -77,6 +77,14 @@ extern int arraylist_new(arraylist** l, arraylist_free_function* free_fn);
 extern int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_function* free_fn);
 
 /**
+* Return the size/length of the arraylist
+*
+* @param l the arraylist
+* @return length/size of the array.
+**/
+extern size_t arraylist_length(arraylist* l);
+
+/**
 * Insert item at location loc of the arraylist
 * 
 * @param l the arraylist
@@ -95,6 +103,13 @@ extern int arraylist_insert(arraylist* l, size_t loc, void* item);
 * @return error code
 **/
 extern int arraylist_set(arraylist* l, size_t loc, void* item);
+
+/**
+* Clear the array of all elements, but do not de-allocate.
+* 
+* @param l the arraylist
+**/
+extern void arraylist_clear(arraylist* l);
 
 /**
 * Print the arraylist on the console.

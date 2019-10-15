@@ -42,6 +42,11 @@ int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_f
 	return 0;
 }
 
+size_t arraylist_length(arraylist* l) {
+	if (l == NULL) return NULL;
+	return l->size;
+}
+
 int arraylist_resize(arraylist* l, size_t max) {
 	void** new_array;
 	size_t new_capacity;
@@ -120,6 +125,13 @@ int arraylist_set(arraylist* l, size_t loc, void* item) {
 	else {
 		return E_ARRAYLIST_INDEX_NOT_FOUND;
 	}
+}
+
+void arraylist_clear(arraylist* l) {
+	for (size_t i = 0; i < l->size; i++) {
+		l->free_fn(l->array[i]);
+	}
+	l->size = 0;
 }
 
 void arraylist_print(arraylist* l, void (*item_print)(void* item)) {

@@ -33,9 +33,7 @@ static void test_arraylist_new_create_only(void** state) {
 }
 
 static void test_arraylist_insert_at_beginning(void** state) {
-	arraylist_print(intptrlist0, print_intptr);
 	for (int i = 0; i < 5; i++) {
-		printf("Adding %d\n", i);
 		int* x = (int*)calloc(1, sizeof(int));
 		assert_non_null(x);
 		if (x != NULL) {
@@ -47,6 +45,23 @@ static void test_arraylist_insert_at_beginning(void** state) {
 	for (int i = 0; i < 5; i++) {
 		assert_int_equal(*((int*)(intptrlist0->array[i])), 4-i);
 	}
+	arraylist_clear(intptrlist0);
+}
+
+static void test_arraylist_insert_at_end(void** state) {
+	for (int i = 0; i < 5; i++) {
+		int* x = (int*)calloc(1, sizeof(int));
+		assert_non_null(x);
+		if (x != NULL) {
+			*x = i;
+			arraylist_insert(intptrlist0, arraylist_length(intptrlist0), x);
+		}
+	}
+	arraylist_print(intptrlist0, print_intptr);
+	for (int i = 0; i < 5; i++) {
+		assert_int_equal(*((int*)(intptrlist0->array[i])), i);
+	}
+	arraylist_clear(intptrlist0);
 }
 
 
@@ -54,6 +69,7 @@ int arraylist_tests() {
 	const struct CMUnitTest tests[] = {
 		cmocka_unit_test(test_arraylist_new_create_only),
 		cmocka_unit_test(test_arraylist_insert_at_beginning),
+		cmocka_unit_test(test_arraylist_insert_at_end),
 	};
 	return cmocka_run_group_tests_name("arraylist tests", tests,
 		group_setup, group_teardown);
