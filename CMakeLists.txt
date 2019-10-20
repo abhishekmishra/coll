@@ -27,6 +27,7 @@ set( COLL_TEST_SOURCES
 add_library ( ${PROJECT_NAME} ${COLL_SOURCES} )
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 11)
 
+# TEST Configuration
 option(ENABLE_TESTS "Perform unit tests after build" OFF)
 set ( COLL_TEST_PROGRAM_NAME coll_test )
 if (ENABLE_TESTS)
@@ -34,10 +35,6 @@ if (ENABLE_TESTS)
   set_property(TARGET ${COLL_TEST_PROGRAM_NAME} PROPERTY C_STANDARD 11)
   include_directories( test )
   include_directories( src )
-  include_directories( src )
-
-
-
 
   # cmocka
   find_package(cmocka CONFIG REQUIRED)
@@ -48,3 +45,8 @@ if (ENABLE_TESTS)
   add_test( all_coll_tests ${COLL_TEST_PROGRAM_NAME} )
   enable_testing()
 endif(ENABLE_TESTS)
+
+# Package Configuration
+export(TARGETS coll NAMESPACE coll:: FILE coll.cmake)
+set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
+export(PACKAGE coll)
