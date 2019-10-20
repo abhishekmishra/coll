@@ -47,6 +47,6 @@ if (ENABLE_TESTS)
 endif(ENABLE_TESTS)
 
 # Package Configuration
-export(TARGETS coll NAMESPACE coll:: FILE coll.cmake)
+export(TARGETS coll NAMESPACE coll:: FILE collConfig.cmake)
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 export(PACKAGE coll)
