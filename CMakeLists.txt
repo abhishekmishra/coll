@@ -26,6 +26,7 @@ set( COLL_TEST_SOURCES
 
 add_library ( ${PROJECT_NAME} ${COLL_SOURCES} )
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 11)
+target_include_directories ( ${PROJECT_NAME} PUBLIC src)
 
 # TEST Configuration
 option(ENABLE_TESTS "Perform unit tests after build" OFF)
