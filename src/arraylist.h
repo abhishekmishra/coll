@@ -2,6 +2,7 @@
 #define ___ARRAYLIST_H___
 
 #include <stdlib.h>
+#include <stdint.h>
 
 /**
 * ArrayList: This is a datastructure which implements the
