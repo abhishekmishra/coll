@@ -31,10 +31,12 @@
 #define E_ARRAYLIST_INDEX_BEYOND_CAPACITY 2
 #define E_ARRAYLIST_INDEX_NOT_FOUND 3
 
+#define MAX_VOIDPTR_ALLOCATE (SIZE_MAX / sizeof(void*))
+
 typedef void (arraylist_free_function)(void* data);
 
 /**
-* This struct represents the ArrayList and it's pointer is
+* This struct represents the ArrayList and its pointer is
 * the user's handle to the arraylist.
 * 
 * The values in the struct should be considered readonly,
@@ -61,16 +63,16 @@ typedef struct arraylist_t {
 /**
 * Create a new arraylist with the default initial capacity.
 *
-* @param l an unitialized arraylist pointer, which will be created by the constructor.
+* @param l an uninitialized arraylist pointer, which will be created by the constructor.
 * @param free the function used to free the items in the arraylist
-* @return value indicating success or falilure (0 is success)
+* @return value indicating success or failure (0 is success)
 **/
 extern int arraylist_new(arraylist** l, arraylist_free_function* free_fn);
 
 /**
 * Create a new arraylist with the specified initial capacity.
 * 
-* @param l an unitialized arraylist pointer, which will be created by the constructor.
+* @param l an uninitialized arraylist pointer, which will be created by the constructor.
 * @param capacity total capacity of the arraylist (0 will set capacity to default)
 * @param free the function used to free the items in the arraylist
 * @return value indicating success or falilure (0 is success)
@@ -86,7 +88,16 @@ extern int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist
 extern size_t arraylist_length(arraylist* l);
 
 /**
-* Insert item at location loc of the arraylist
+* Insert item at location loc of the arraylist.
+* Can insert at any location inclusive of 0 to 
+* length of array (that is one beyond the last element).
+* 
+* If loc is greater than current size, then 
+* returns E_ARRAYLIST_INDEX_NOT_FOUND.
+* If the size of current arraylist has already reached MAX_VOIDPTR_ALLOCATE,
+* then returns E_ARRAYLIST_INDEX_BEYOND_CAPACITY.
+* If reallocation of arraylist to accomodate new item fails,
+* then returns E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY.
 * 
 * @param l the arraylist
 * @param loc location to insert at
@@ -98,6 +109,10 @@ extern int arraylist_insert(arraylist* l, size_t loc, void* item);
 /**
 * Insert an item at the end of the arraylist
 * equivalent to arraylist_insert(l, arraylist_length(l), item)
+* If the size of current arraylist has already reached MAX_VOIDPTR_ALLOCATE,
+* then returns E_ARRAYLIST_INDEX_BEYOND_CAPACITY.
+* If reallocation of arraylist to accomodate new item fails,
+* then returns E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY.
 *
 * @param l the arraylist
 * @param item item to insert
@@ -107,6 +122,10 @@ extern int arraylist_add(arraylist* l, void* item);
 
 /**
 * Set the item at location loc of the arraylist.
+* If the location specified is greater than MAX_VOIDPTR_ALLOCATE, then
+* an error code E_ARRAYLIST_INDEX_BEYOND_CAPACITY is returned.
+* If loc is greater than current length of the arraylist,
+* then E_ARRAYLIST_INDEX_NOT_FOUND is returned.
 *
 * @param l the arraylist
 * @param loc location to insert at
@@ -117,6 +136,7 @@ extern int arraylist_set(arraylist* l, size_t loc, void* item);
 
 /**
 * Get the item at location loc of the arraylist.
+* Returns NULL if the location is beyond the length of the arraylist
 *
 * @param l the arraylist
 * @param loc location to insert at
@@ -132,11 +152,11 @@ extern void* arraylist_get(arraylist* l, size_t loc);
 extern void arraylist_clear(arraylist* l);
 
 /**
-* Get the item at location loc of the arraylist.
+* Deletes the item at location loc of the arraylist.
 * NOTE: Deleted item is not freed, user must free if needed.
 *
 * @param l the arraylist
-* @param loc location to insert at
+* @param loc location to delete at
 * @return item the deleted item (NULL if unable to delete or value was NULL)
 **/
 extern int arraylist_delete(arraylist* l, size_t loc);
@@ -149,6 +169,7 @@ extern int arraylist_delete(arraylist* l, size_t loc);
 **/
 extern void arraylist_free(arraylist* l);
 
+//TODO: reconsider function to return string, instead of print
 /**
 * Print the arraylist on the console.
 * @param l the arraylist

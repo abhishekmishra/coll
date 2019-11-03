@@ -2,8 +2,6 @@
 #include "arraylist.h"
 #include <stdio.h>
 
-#define MAX_VOIDPTR_ALLOCATE (SIZE_MAX / sizeof(void*))
-
 int arraylist_new(arraylist** l, arraylist_free_function* free_fn) {
 	return arraylist_new_with_capacity(l, 0, free_fn);
 }
@@ -17,7 +15,7 @@ int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_f
 	arraylist* list = (*l);
 
 	// set the capacity of the newly created list
-	if (capacity >= 0 && capacity <= SIZE_MAX) {
+	if (capacity >= 0 && capacity <= MAX_VOIDPTR_ALLOCATE) {
 		if (capacity == 0) {
 			list->capacity = ARRAYLIST_DEFAULT_SIZE;
 		}
@@ -56,15 +54,12 @@ int arraylist_resize(arraylist* l, size_t max) {
 		return 0;
 	}
 
-	// if current capacity is less than half of SIZE_MAX
-	// try to double the capacity, so that we have to do
-	// fewer reallocations.
-	// TODO: However this also means that reallocations will proceed
-	// with size of 1 after array size has reached SIZE_MAX/2
-
-	if (l->capacity < SIZE_MAX / 2) {
-		//double capacity
-		new_capacity = l->capacity * 2;
+	// if current capacity is less than half of MAX_VOIDPTR_ALLOCATE
+	// try to increase the capacity by 50%
+	if (l->capacity < MAX_VOIDPTR_ALLOCATE / 2) {
+		//increase capacity
+		size_t capacity_to_add = (l->capacity / 2) == 0 ? 1 : (l->capacity / 2);
+		new_capacity = l->capacity + capacity_to_add;
 
 		// if capacity is still less than max
 		if (new_capacity < max) {
@@ -95,7 +90,10 @@ int arraylist_resize(arraylist* l, size_t max) {
 }
 
 int arraylist_insert(arraylist* l, size_t loc, void* item) {
-	if (loc > SIZE_MAX - 1) {
+	if (loc > l->size) {
+		return E_ARRAYLIST_INDEX_NOT_FOUND;
+	}
+	if (loc > MAX_VOIDPTR_ALLOCATE - 1) {
 		return E_ARRAYLIST_INDEX_BEYOND_CAPACITY;
 	}
 	if (arraylist_resize(l, loc)) {
@@ -109,6 +107,7 @@ int arraylist_insert(arraylist* l, size_t loc, void* item) {
 	}
 	l->array[loc] = item;
 	l->size = l->size + 1;
+	return 0;
 }
 
 int arraylist_add(arraylist* l, void* item) {
@@ -116,7 +115,7 @@ int arraylist_add(arraylist* l, void* item) {
 }
 
 int arraylist_set(arraylist* l, size_t loc, void* item) {
-	if (loc > SIZE_MAX - 1) {
+	if (loc > MAX_VOIDPTR_ALLOCATE - 1) {
 		return E_ARRAYLIST_INDEX_BEYOND_CAPACITY;
 	}
 	if (loc < l->size) {
@@ -124,7 +123,6 @@ int arraylist_set(arraylist* l, size_t loc, void* item) {
 			l->free_fn(l->array[loc]);
 		}
 		l->array[loc] = item;
-		l->size = l->size + 1;
 	}
 	else {
 		return E_ARRAYLIST_INDEX_NOT_FOUND;
@@ -153,10 +151,10 @@ int arraylist_delete(arraylist* l, size_t loc) {
 	void* item;
 	if (loc < l->size) {
 		if (l->free_fn != NULL) {
-			item = arraylist_get(l, loc);
+			item = l->array[loc];
 		}
 		for (size_t i = loc; i < l->size - 1; i++) {
-			l->array[i] = arraylist_get(l, i + 1);
+			l->array[i] = l->array[i + 1];
 		}
 		l->size = l->size - 1;
 		return 0;
@@ -179,11 +177,11 @@ void arraylist_free(arraylist* l) {
 
 void arraylist_print(arraylist* l, void (*item_print)(void* item)) {
 	printf("ArrayList size=%zu, capacity=%zu\n[", l->size, l->capacity);
-	for (size_t i = 0; i < l->size; i++) {
+	size_t i;
+	for (i = 0; i < l->size - 1; i++) {
 		item_print(l->array[i]);
-		if (i != l->size - 1) {
-			printf(", ");
-		}
+		printf(", ");
 	}
+	item_print(l->array[i]);
 	printf("]\n");
 }
