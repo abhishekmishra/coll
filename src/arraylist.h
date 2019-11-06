@@ -1,6 +1,10 @@
 #ifndef ___ARRAYLIST_H___
 #define ___ARRAYLIST_H___
 
+#ifdef __cplusplus  
+extern "C" {
+#endif
+
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -178,5 +182,8 @@ extern void arraylist_free(arraylist* l);
 **/
 extern void arraylist_print(arraylist* l, void (*item_print)(void* item));
 
+#ifdef __cplusplus 
+}
+#endif
 
 #endif /* ___ARRAYLIST_H___ */
