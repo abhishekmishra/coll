@@ -148,11 +148,7 @@ void arraylist_clear(arraylist* l) {
 }
 
 int arraylist_delete(arraylist* l, size_t loc) {
-	void* item;
 	if (loc < l->size) {
-		if (l->free_fn != NULL) {
-			item = l->array[loc];
-		}
 		for (size_t i = loc; i < l->size - 1; i++) {
 			l->array[i] = l->array[i + 1];
 		}
