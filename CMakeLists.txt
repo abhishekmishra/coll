@@ -28,6 +28,16 @@ add_library ( ${PROJECT_NAME} ${COLL_SOURCES} )
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 11)
 target_include_directories ( ${PROJECT_NAME} PUBLIC src)
 
+# Test enable lua bindings
+option (ENABLE_LUA "Enable LUA bindings for collections" OFF)
+if (ENABLE_LUA)
+include(FindLua)
+  if (LUA_FOUND)
+    message("lua found at ${LUA_LIBRARIES} ${LUA_INCLUDE_DIR}")
+    message("lua version is ${LUA_VERSION_STRING}")
+  endif (LUA_FOUND)
+endif (ENABLE_LUA)
+
 # TEST Configuration
 option(ENABLE_TESTS "Perform unit tests after build" OFF)
 set ( COLL_TEST_PROGRAM_NAME coll_test )
