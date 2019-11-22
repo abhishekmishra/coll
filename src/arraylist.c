@@ -41,7 +41,7 @@ int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_f
 }
 
 size_t arraylist_length(arraylist* l) {
-	if (l == NULL) return NULL;
+	if (l == NULL) return 0;
 	return l->size;
 }
 
@@ -123,6 +123,7 @@ int arraylist_set(arraylist* l, size_t loc, void* item) {
 			l->free_fn(l->array[loc]);
 		}
 		l->array[loc] = item;
+		return 0;
 	}
 	else {
 		return E_ARRAYLIST_INDEX_NOT_FOUND;

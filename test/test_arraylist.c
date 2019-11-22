@@ -19,7 +19,7 @@ void print_intptr(int* p) {
 }
 
 static int group_setup(void** state) {
-	int err = arraylist_new(&intptrlist0, &free_intptr);
+	int err = arraylist_new(&intptrlist0, (arraylist_free_function*)&free_intptr);
 	return err;
 }
 static int group_teardown(void** state) {
@@ -49,7 +49,7 @@ static void test_arraylist_new_create_and_free(void** state) {
 
 static void test_arraylist_new_create_and_free_with_item_free(void** state) {
 	arraylist* test_l;
-	int err = arraylist_new(&test_l, free_intptr);
+	int err = arraylist_new(&test_l, (arraylist_free_function*)free_intptr);
 
 	int* x = (int*)calloc(1, sizeof(int));
 	assert_non_null(x);
@@ -70,7 +70,7 @@ static void test_arraylist_insert_at_beginning(void** state) {
 			arraylist_insert(intptrlist0, 0, x);
 		}
 	}
-	arraylist_print(intptrlist0, print_intptr);
+	arraylist_print(intptrlist0, (arraylist_free_function*)print_intptr);
 	for (int i = 0; i < 5; i++) {
 		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), 4ULL - i);
 	}
@@ -86,7 +86,7 @@ static void test_arraylist_insert_at_end(void** state) {
 			arraylist_insert(intptrlist0, arraylist_length(intptrlist0), x);
 		}
 	}
-	arraylist_print(intptrlist0, print_intptr);
+	arraylist_print(intptrlist0, (arraylist_free_function*)print_intptr);
 	for (int i = 0; i < 5; i++) {
 		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i);
 	}
@@ -134,7 +134,7 @@ static void test_arraylist_add_simple(void** state) {
 			arraylist_add(intptrlist0, x);
 		}
 	}
-	arraylist_print(intptrlist0, print_intptr);
+	arraylist_print(intptrlist0, (arraylist_free_function*)print_intptr);
 	for (int i = 0; i < 5; i++) {
 		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i);
 	}
@@ -150,7 +150,7 @@ static void test_arraylist_delete_at_beginning(void** state) {
 			arraylist_add(intptrlist0, x);
 		}
 	}
-	arraylist_print(intptrlist0, print_intptr);
+	arraylist_print(intptrlist0, (arraylist_free_function*)print_intptr);
 	for (int i = 0; i < 5; i++) {
 		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i);
 	}
@@ -160,7 +160,7 @@ static void test_arraylist_delete_at_beginning(void** state) {
 	for (int i = 0; i < 2; i++) {
 		assert_int_equal(*((int*)(arraylist_get(intptrlist0, i))), i + 3ULL);
 	}
-	arraylist_print(intptrlist0, print_intptr);
+	arraylist_print(intptrlist0, (arraylist_free_function*)print_intptr);
 	arraylist_clear(intptrlist0);
 }
 
