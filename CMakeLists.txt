@@ -24,17 +24,27 @@ set( COLL_TEST_SOURCES
   test/test_arraylist.c
 )
 
+# Test enable lua bindings
+option (ENABLE_LUA "Enable LUA bindings for collections" OFF)
+if (ENABLE_LUA)
+  include(FindLua)
+  if (LUA_FOUND)
+    message("lua found at ${LUA_LIBRARIES} ${LUA_INCLUDE_DIR}")
+    message("lua version is ${LUA_VERSION_STRING}")
+    set( COLL_SOURCES ${COLL_SOURCES}
+      src/lualib_arraylist.c
+    )
+  endif (LUA_FOUND)
+endif (ENABLE_LUA)
+
 add_library ( ${PROJECT_NAME} ${COLL_SOURCES} )
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 11)
 target_include_directories ( ${PROJECT_NAME} PUBLIC src)
 
-# Test enable lua bindings
-option (ENABLE_LUA "Enable LUA bindings for collections" OFF)
 if (ENABLE_LUA)
-include(FindLua)
   if (LUA_FOUND)
-    message("lua found at ${LUA_LIBRARIES} ${LUA_INCLUDE_DIR}")
-    message("lua version is ${LUA_VERSION_STRING}")
+  target_include_directories(${PROJECT_NAME} PRIVATE ${LUA_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} PRIVATE ${LUA_LIBRARIES})    
   endif (LUA_FOUND)
 endif (ENABLE_LUA)
 
