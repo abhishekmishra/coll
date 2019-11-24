@@ -19,7 +19,6 @@ static lua_State *L;
 
 static int get_random_ints(lua_State *L)
 {
-	printf("convert to lua array\n");
 	convert_to_lua_array(intptrlist0, L);
 	return 1;
 }
