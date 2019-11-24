@@ -22,10 +22,8 @@ set( COLL_SOURCES
 set( COLL_TEST_SOURCES 
   test/test_all.c
   test/test_arraylist.c
-  test/test_lualib_arraylist.c
 
   test/test_arraylist.h
-  test/test_lualib_arraylist.h
 )
 
 # Test enable lua bindings
@@ -57,6 +55,15 @@ endif (ENABLE_LUA)
 option(ENABLE_TESTS "Perform unit tests after build" OFF)
 set ( COLL_TEST_PROGRAM_NAME coll_test )
 if (ENABLE_TESTS)
+  if (ENABLE_LUA)
+    if (LUA_FOUND)
+      set( COLL_TEST_SOURCES ${COLL_TEST_SOURCES}
+        test/test_lualib_arraylist.c
+        test/test_lualib_arraylist.h
+      )   
+    endif (LUA_FOUND)
+  endif (ENABLE_LUA)
+
   add_executable(${COLL_TEST_PROGRAM_NAME} ${COLL_TEST_SOURCES})
   set_property(TARGET ${COLL_TEST_PROGRAM_NAME} PROPERTY C_STANDARD 11)
   include_directories( test )
