@@ -8,6 +8,14 @@ extern "C" {
 #include <stdlib.h>
 #include <stdint.h>
 
+#ifdef LUA_ENABLED
+
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+
+#endif //LUA_ENABLED
+
 /**
 * ArrayList: This is a datastructure which implements the
 * abstract datatype (ADT) list, using a fixed length array.
@@ -39,6 +47,10 @@ extern "C" {
 
 typedef void (arraylist_free_function)(void* data);
 
+#ifdef LUA_ENABLED
+typedef void (arraylist_item_to_lua_object)(lua_State* L, void* data);
+#endif //LUA_ENABLED
+
 /**
 * This struct represents the ArrayList and its pointer is
 * the user's handle to the arraylist.
@@ -58,10 +70,13 @@ typedef void (arraylist_free_function)(void* data);
 * by the caller and the function to free the items must be passed to the constructor.
 **/
 typedef struct arraylist_t {
-	void** array;
 	size_t capacity;
 	size_t size;
 	arraylist_free_function* free_fn;
+#ifdef LUA_ENABLED
+	arraylist_item_to_lua_object* convert_to_lua;
+#endif //LUA_ENABLED
+	void** array;
 } arraylist;
 
 /**
@@ -82,6 +97,27 @@ extern int arraylist_new(arraylist** l, arraylist_free_function* free_fn);
 * @return value indicating success or falilure (0 is success)
 **/
 extern int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_function* free_fn);
+
+#ifdef LUA_ENABLED
+
+/**
+ * Set the function which converts items in this arraylist to lua objects.
+ *
+ * @param l the arraylist
+ * @param convert_to_lua the conversion function.
+ **/
+extern void set_lua_convertor(arraylist* l, arraylist_item_to_lua_object* convert_to_lua);
+
+/**
+ * Convert the given arraylist to a lua array.
+ * The lua array will be a read-only representation
+ * of the arraylist.
+ * @param list the arraylist
+ * @param L the lua_State
+ */
+extern void convert_to_lua_array(arraylist* list, lua_State* L);
+
+#endif //LUA_ENABLED
 
 /**
 * Return the size/length of the arraylist

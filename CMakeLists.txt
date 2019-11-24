@@ -22,6 +22,10 @@ set( COLL_SOURCES
 set( COLL_TEST_SOURCES 
   test/test_all.c
   test/test_arraylist.c
+  test/test_lualib_arraylist.c
+
+  test/test_arraylist.h
+  test/test_lualib_arraylist.h
 )
 
 # Test enable lua bindings
@@ -29,8 +33,9 @@ option (ENABLE_LUA "Enable LUA bindings for collections" OFF)
 if (ENABLE_LUA)
   include(FindLua)
   if (LUA_FOUND)
-    message("lua found at ${LUA_LIBRARIES} ${LUA_INCLUDE_DIR}")
-    message("lua version is ${LUA_VERSION_STRING}")
+    message("-- lua found at ${LUA_LIBRARIES} ${LUA_INCLUDE_DIR}")
+    message("-- lua version is ${LUA_VERSION_STRING}")
+    add_compile_definitions(LUA_ENABLED)
     set( COLL_SOURCES ${COLL_SOURCES}
       src/lualib_arraylist.c
     )
