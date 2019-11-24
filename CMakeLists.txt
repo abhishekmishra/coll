@@ -74,6 +74,13 @@ if (ENABLE_TESTS)
   target_include_directories(${COLL_TEST_PROGRAM_NAME} PRIVATE ${CMOCKA_INCLUDE_DIR})
   target_link_libraries(${COLL_TEST_PROGRAM_NAME} PRIVATE ${CMOCKA_LIBRARIES})
 
+  if (ENABLE_LUA)
+    if (LUA_FOUND)
+    target_include_directories(${COLL_TEST_PROGRAM_NAME} PRIVATE ${LUA_INCLUDE_DIR})
+    target_link_libraries(${COLL_TEST_PROGRAM_NAME} PRIVATE ${LUA_LIBRARIES})    
+    endif (LUA_FOUND)
+  endif (ENABLE_LUA)
+
   target_link_libraries(${COLL_TEST_PROGRAM_NAME} PUBLIC ${PROJECT_NAME})
   add_test( all_coll_tests ${COLL_TEST_PROGRAM_NAME} )
   enable_testing()

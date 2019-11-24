@@ -19,9 +19,11 @@ extern void convert_to_lua_array(arraylist* list, lua_State* L) {
 	}
 	else {
 		size_t len = arraylist_length(list);
-
+		//printf("convert array of length %d\n", len);
+		lua_createtable(L, len, 0);
 		for (size_t i = 0; i < len; i++) {
-			list->convert_to_lua(L, arraylist_get(list, i));
+			//printf("convert value @ %uL\n", i);
+			list->convert_to_lua(L, i, arraylist_get(list, i));
 		}
 	}
 }

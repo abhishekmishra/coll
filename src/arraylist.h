@@ -48,7 +48,7 @@ extern "C" {
 typedef void (arraylist_free_function)(void* data);
 
 #ifdef LUA_ENABLED
-typedef void (arraylist_item_to_lua_object)(lua_State* L, void* data);
+typedef void (arraylist_item_to_lua_object)(lua_State* L, int index, void* data);
 #endif //LUA_ENABLED
 
 /**
