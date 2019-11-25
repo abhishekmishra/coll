@@ -31,11 +31,12 @@ static void test_arraylist_new_create_only(void** state) {
 	arraylist* test_l;
 	int err = arraylist_new(&test_l, NULL);
 	assert_int_equal(err, 0);
+	arraylist_free(test_l);
 }
 
 static void test_arraylist_new_create_and_free(void** state) {
 	arraylist* test_l;
-	int err = arraylist_new(&test_l, NULL);
+	int err = arraylist_new(&test_l, free);
 	
 	int* x = (int*)calloc(1, sizeof(int));
 	assert_non_null(x);

@@ -67,6 +67,7 @@ static int group_setup(void **state)
 static int group_teardown(void **state)
 {
 	arraylist_free(intptrlist0);
+	lua_close(L);
 	return 0;
 }
 
