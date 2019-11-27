@@ -17,13 +17,16 @@ set ( COLL_VERSION_PATCH 0 )
 set( COLL_SOURCES 
   src/arraylist.h
   src/arraylist.c
+  src/coll_arraylist_map.h
+  src/coll_arraylist_map.c
 )
 
 set( COLL_TEST_SOURCES 
   test/test_all.c
-  test/test_arraylist.c
-
   test/test_arraylist.h
+  test/test_arraylist.c
+  test/test_coll_arraylist_map.h
+  test/test_coll_arraylist_map.c
 )
 
 # Test enable lua bindings
