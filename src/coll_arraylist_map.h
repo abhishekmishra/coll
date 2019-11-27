@@ -75,6 +75,20 @@ int coll_al_map_put(coll_al_map* map, void* key, void* val);
 void* coll_al_map_get(coll_al_map* map, void* key);
 
 /**
+ * Remove the key/value pair identified by the key.
+ * The iter_fn if provided is called with index, key and value,
+ * just before the delete. This allows the caller to perform an
+ * operation such as free on the items being deleted.
+ *
+ * The items are not freed when they are deleted from the arraylist.
+ *
+ * @param map the map
+ * @param key the key
+ * @return flag indicating whether key is found.
+ */
+bool coll_al_map_remove(coll_al_map* map, void* key, coll_al_map_iter_fn* iter_fn);
+
+/**
  * Return a flag indicating whether the given key is in the map.
  * 
  * @param map the map

@@ -76,6 +76,26 @@ void* coll_al_map_get(coll_al_map* map, void* key) {
 	return NULL;
 }
 
+bool coll_al_map_remove(coll_al_map* map, void* key, coll_al_map_iter_fn* iter_fn) {
+	bool found = false;
+	size_t loc;
+	for (size_t i = 0; i < arraylist_length(map->keys); i++) {
+		void* k = arraylist_get(map->keys, i);
+		if (map->compare(key, k) == 0) {
+			found = true;
+			loc = i;
+		}
+	}
+	if (found) {
+		if (iter_fn != NULL) {
+			iter_fn(loc, arraylist_get(map->keys, loc), arraylist_get(map->values, loc));
+		}
+		arraylist_delete(map->keys, loc);
+		arraylist_delete(map->values, loc);
+		map->size = arraylist_length(map->keys);
+	}
+}
+
 bool coll_al_map_has(coll_al_map* map, void* key) {
 	for (size_t i = 0; i < arraylist_length(map->keys); i++) {
 		void* k = arraylist_get(map->keys, i);

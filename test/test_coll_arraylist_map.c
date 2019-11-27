@@ -54,12 +54,26 @@ void print_k_v(size_t i, char* key, int* val) {
 
 static void test_coll_al_map_foreach(void** state) {
 	coll_al_map_foreach(map, &print_k_v);
+	assert_int_equal(map->size, 5);
+}
+
+void free_k_v(size_t i, char* key, int* val) {
+	printf("To free [%zu] %2s = %2d\n", i, key, *val);
+	free(key);
+	free(val);
+}
+
+static void test_coll_al_map_delete(void** state) {
+	coll_al_map_remove(map, "3", &free_k_v);
+	coll_al_map_foreach(map, &print_k_v);
+	assert_int_equal(map->size, 4);
 }
 
 int coll_al_map_tests() {
 	const struct CMUnitTest tests[] = {
 		cmocka_unit_test(test_coll_al_map_create_new),
 		cmocka_unit_test(test_coll_al_map_foreach),
+		cmocka_unit_test(test_coll_al_map_delete),
 	};
 	return cmocka_run_group_tests_name("arraylist map tests", tests,
 		group_setup, group_teardown);
