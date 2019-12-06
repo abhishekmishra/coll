@@ -94,6 +94,7 @@ bool coll_al_map_remove(coll_al_map* map, void* key, coll_al_map_iter_fn* iter_f
 		arraylist_delete(map->values, loc);
 		map->size = arraylist_length(map->keys);
 	}
+	return found;
 }
 
 bool coll_al_map_has(coll_al_map* map, void* key) {
@@ -114,7 +115,7 @@ void free_coll_al_map(coll_al_map* map) {
 	}
 }
 
-void coll_al_map_foreach(coll_al_map* map, coll_al_map_iter_fn* iter_fn) {
+void coll_al_map_foreach_fn(coll_al_map* map, coll_al_map_iter_fn* iter_fn) {
 	if (map == NULL) {
 		return;
 	}

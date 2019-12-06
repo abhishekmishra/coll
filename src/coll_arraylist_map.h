@@ -27,6 +27,13 @@ typedef struct coll_al_map_t {
     arraylist* values;
 } coll_al_map;
 
+#define coll_al_map_keys(map)				map->keys
+#define coll_al_map_keys_length(map)		arraylist_length(coll_al_map_keys(map))
+#define coll_al_map_keys_get_idx(map, i)	arraylist_get(coll_al_map_keys(map), i)
+#define coll_al_map_values(map)				map->values
+#define coll_al_map_values_length(map)		arraylist_length(coll_al_map_values(map))
+#define coll_al_map_values_get_idx(map, i)	arraylist_get(coll_al_map_values(map), i)
+
 /**
  * Create a new map based on arraylist,
  * with default initial capacity.
@@ -111,7 +118,7 @@ void free_coll_al_map(coll_al_map* map);
  * @param map the map
  * @param iter_fn the function which is called per index, key, value
  */
-void coll_al_map_foreach(coll_al_map* map, coll_al_map_iter_fn* iter_fn);
+void coll_al_map_foreach_fn(coll_al_map* map, coll_al_map_iter_fn* iter_fn);
 
 #ifdef __cplusplus 
 }

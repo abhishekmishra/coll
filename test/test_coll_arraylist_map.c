@@ -53,7 +53,7 @@ void print_k_v(size_t i, char* key, int* val) {
 }
 
 static void test_coll_al_map_foreach(void** state) {
-	coll_al_map_foreach(map, &print_k_v);
+	coll_al_map_foreach_fn(map, &print_k_v);
 	assert_int_equal(map->size, 5);
 }
 
@@ -65,7 +65,7 @@ void free_k_v(size_t i, char* key, int* val) {
 
 static void test_coll_al_map_delete(void** state) {
 	coll_al_map_remove(map, "3", &free_k_v);
-	coll_al_map_foreach(map, &print_k_v);
+	coll_al_map_foreach_fn(map, &print_k_v);
 	assert_int_equal(map->size, 4);
 }
 
