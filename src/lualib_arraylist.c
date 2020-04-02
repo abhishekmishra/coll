@@ -24,6 +24,7 @@ extern void convert_to_lua_array(arraylist* list, lua_State* L) {
 		for (size_t i = 0; i < len; i++) {
 			//printf("convert value @ %uL\n", i);
 			list->convert_to_lua(L, i, arraylist_get(list, i));
+			lua_seti(L, -2, i+1);
 		}
 	}
 }

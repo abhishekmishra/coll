@@ -44,7 +44,6 @@ void intptr_to_lua_number(lua_State *L, int index, void *data)
 	int* x = (int*)data;
 	//printf("setting value %d at %d\n", *x, index+1);
 	lua_pushinteger(L, *x);
-	lua_seti(L, -2, index+1);
 }
 
 static int group_setup(void **state)
