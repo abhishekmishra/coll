@@ -2,6 +2,8 @@
     "files.associations": {
         "lualib.h": "c",
         "lauxlib.h": "c",
-        "arraylist.h": "c"
+        "arraylist.h": "c",
+        "lua.h": "c",
+        "stddef.h": "c"
     }
 }
