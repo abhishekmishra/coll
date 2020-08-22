@@ -43,7 +43,7 @@ if (ENABLE_LUA)
   endif (LUA_FOUND)
 endif (ENABLE_LUA)
 
-add_library ( ${PROJECT_NAME} ${COLL_SOURCES} )
+add_library ( ${PROJECT_NAME} SHARED ${COLL_SOURCES} )
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 11)
 target_include_directories ( ${PROJECT_NAME} PUBLIC src)
 
