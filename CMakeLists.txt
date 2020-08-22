@@ -29,6 +29,11 @@ set( COLL_TEST_SOURCES
   test/test_coll_arraylist_map.c
 )
 
+if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND LUA_FROM_PKGCONFIG)
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(lua REQUIRED IMPORTED_TARGET lua)
+endif()
+
 # Test enable lua bindings
 option (ENABLE_LUA "Enable LUA bindings for collections" OFF)
 if (ENABLE_LUA)
@@ -74,8 +79,7 @@ if (ENABLE_TESTS)
 
   # cmocka
   find_package(cmocka CONFIG REQUIRED)
-  target_include_directories(${COLL_TEST_PROGRAM_NAME} PRIVATE ${CMOCKA_INCLUDE_DIR})
-  target_link_libraries(${COLL_TEST_PROGRAM_NAME} PRIVATE ${CMOCKA_LIBRARIES})
+  target_link_libraries(${COLL_TEST_PROGRAM_NAME} PRIVATE cmocka::cmocka)
 
   if (ENABLE_LUA)
     if (LUA_FOUND)
