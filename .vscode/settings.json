@@ -5,5 +5,6 @@
         "arraylist.h": "c",
         "lua.h": "c",
         "stddef.h": "c"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
