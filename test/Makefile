@@ -1,5 +1,5 @@
-INC=-I../src
-LIB=-L../src -lcoll -lcmocka
+INC=-I../src `pkg-config --cflags cmocka`
+LIB=-L../src -lcoll `pkg-config --libs cmocka`
 
 all: test_all
 
