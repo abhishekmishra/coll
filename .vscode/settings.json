@@ -6,7 +6,8 @@
         "lua.h": "c",
         "stddef.h": "c",
         "test_arraylist.h": "c",
-        "test_lualib_arraylist.h": "c"
+        "test_lualib_arraylist.h": "c",
+        "cmocka.h": "c"
     },
     "cmake.configureOnOpen": false
 }

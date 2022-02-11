@@ -25,9 +25,13 @@
                 "${workspaceFolder}/**",
                 "${vcpkgRoot}/x64-linux/include",
                 "${workspaceFolder}/src",
-                "/usr/include/lua5.3"
+                "/usr/include/lua5.3",
+                "/usr/include/apr-1.0"
             ],
-            "defines": [],
+            "defines": [
+                "APR_ENABLED",
+                "LUA_ENABLED"
+            ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "gnu11",
             "cppStandard": "gnu++14",

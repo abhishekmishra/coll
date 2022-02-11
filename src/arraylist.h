@@ -16,6 +16,13 @@ extern "C" {
 
 #endif //LUA_ENABLED
 
+#ifdef APR_ENABLED
+
+#include <apr.h>
+#include <apr_pools.h>
+
+#endif //APR_ENABLED
+
 /**
 * ArrayList: This is a datastructure which implements the
 * abstract datatype (ADT) list, using a fixed length array.
@@ -76,6 +83,9 @@ typedef struct arraylist_t {
 #ifdef LUA_ENABLED
 	arraylist_item_to_lua_object* convert_to_lua;
 #endif //LUA_ENABLED
+#ifdef APR_ENABLED
+	apr_pool_t* pool;
+#endif //APR_ENABLED
 	void** array;
 } arraylist;
 
@@ -217,6 +227,14 @@ extern void arraylist_free(arraylist* l);
 * @return void
 **/
 extern void arraylist_print(arraylist* l, void (*item_print)(void* item));
+
+#ifdef APR_ENABLED
+
+extern int arraylist_apr_new(arraylist** l, apr_pool_t* pool, arraylist_free_function* free_fn);
+extern int arraylist_apr_new_with_capacity(arraylist** l, apr_pool_t* pool, size_t capacity, arraylist_free_function* free_fn);
+extern void arraylist_apr_free(arraylist* l);
+
+#endif //APR_ENABLED
 
 #ifdef __cplusplus 
 }

@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef APR_ENABLED
+
+#include <apr.h>
+#include <apr_pools.h>
+
+#endif //APR_ENABLED
+
 #include "test_arraylist.h"
 #include "arraylist.h"
 
@@ -165,6 +172,47 @@ static void test_arraylist_delete_at_beginning(void** state) {
 	arraylist_clear(intptrlist0);
 }
 
+#ifdef APR_ENABLED
+
+static void test_arraylist_apr_all(void** state) {
+	apr_initialize();
+
+	apr_pool_t* pool;
+	apr_status_t res;
+
+	res = apr_pool_create(&pool, NULL);
+	if(res != APR_SUCCESS) {
+		fail_msg("Unable to allocate apr pool\n");
+	}
+
+	arraylist* pool_al;
+	res = arraylist_apr_new(&pool_al, pool, (arraylist_free_function*)&free_intptr);
+	if(res != 0) {
+		fail_msg("Unable to create arraylist");
+	}
+
+	for (int i = 0; i < 655; i++) {
+		int* x = (int*)calloc(1, sizeof(int));
+		assert_non_null(x);
+		if (x != NULL) {
+			*x = i;
+			arraylist_add(pool_al, x);
+		}
+	}
+	arraylist_print(pool_al, (arraylist_free_function*)print_intptr);
+	for (int i = 0; i < 5; i++) {
+		assert_int_equal(*((int*)(arraylist_get(pool_al, i))), i);
+	}
+	arraylist_clear(pool_al);
+
+	arraylist_apr_free(pool_al);
+
+	apr_pool_destroy(pool);
+	apr_terminate();
+}
+
+#endif //APR_ENABLED
+
 int arraylist_tests() {
 	const struct CMUnitTest tests[] = {
 		cmocka_unit_test(test_arraylist_new_create_only),
@@ -176,6 +224,10 @@ int arraylist_tests() {
 		cmocka_unit_test(test_arraylist_insert_large),
 		cmocka_unit_test(test_arraylist_add_simple),
 		cmocka_unit_test(test_arraylist_delete_at_beginning),
+#ifdef APR_ENABLED
+		cmocka_unit_test(test_arraylist_apr_all),	
+#endif //APR_ENABLED
+
 	};
 	return cmocka_run_group_tests_name("arraylist tests", tests,
 		group_setup, group_teardown);

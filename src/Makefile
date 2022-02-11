@@ -1,5 +1,7 @@
-LIBS=			-shared $(if $(LUA_ENABLED), `pkg-config --libs lua5.3`)
-CFLAGS=			-Wall -fpic $(if $(LUA_ENABLED),`pkg-config --cflags lua5.3` -D LUA_ENABLED)
+LUA_ENABLED=1
+APR_ENABLED=1
+LIBS=			-shared $(if $(LUA_ENABLED), `pkg-config --libs lua5.3`) $(if $(APR_ENABLED),`pkg-config --libs apr-1`)
+CFLAGS=			-Wall -fpic $(if $(LUA_ENABLED),`pkg-config --cflags lua5.3` -D LUA_ENABLED) $(if $(APR_ENABLED), `pkg-config --cflags apr-1` -D APR_ENABLED)
 
 all: 			libcoll.so
 

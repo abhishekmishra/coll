@@ -1,5 +1,7 @@
-CFLAGS=-Wall -fpic -I../src `pkg-config --cflags cmocka` $(if $(LUA_ENABLED),`pkg-config --cflags lua5.3` -D LUA_ENABLED)
-LIB=-L../src -lcoll `pkg-config --libs cmocka` $(if $(LUA_ENABLED), `pkg-config --libs lua5.3`)
+LUA_ENABLED=1
+APR_ENABLED=1
+CFLAGS=-Wall -fpic -I../src `pkg-config --cflags cmocka` $(if $(LUA_ENABLED),`pkg-config --cflags lua5.3` -D LUA_ENABLED) $(if $(APR_ENABLED),`pkg-config --cflags apr-1` -D APR_ENABLED)
+LIB=-L../src -lcoll `pkg-config --libs cmocka` $(if $(LUA_ENABLED), `pkg-config --libs lua5.3`) $(if $(APR_ENABLED), `pkg-config --libs apr-1`)
 
 all: test_all
 
