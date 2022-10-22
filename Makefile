@@ -1,18 +1,62 @@
-all: src test
+# This makefile assists in simplifying calls to peda cmake (via pemk alias)
+# Used in vim etc. for building using shortcuts.
+# Date: 22/10/2022
 
-src:
-	$(MAKE) -C src
+### https://gist.github.com/sighingnow/deee806603ec9274fd47
+# Detect operating system in Makefile.
+# Author: He Tao
+# Date: 2015-05-30
 
-test:
-	$(MAKE) -C test
+OSFLAG 				:=
+ifeq ($(OS),Windows_NT)
+	OSFLAG += -D WIN32
+	ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+		OSFLAG += -D AMD64
+	endif
+	ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+		OSFLAG += -D IA32
+	endif
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		OSFLAG += -D LINUX
+	endif
+	ifeq ($(UNAME_S),Darwin)
+		OSFLAG += -D OSX
+	endif
+		UNAME_P := $(shell uname -p)
+	ifeq ($(UNAME_P),x86_64)
+		OSFLAG += -D AMD64
+	endif
+		ifneq ($(filter %86,$(UNAME_P)),)
+	OSFLAG += -D IA32
+		endif
+	ifneq ($(filter arm%,$(UNAME_P)),)
+		OSFLAG += -D ARM
+	endif
+endif
+
+os:
+	@echo $(OSFLAG)
+
+#############################################################
+
+.PHONY: all genbuild delbuild build run clean
+
+all: clean build run
+
+# TODO: this needs flags for proper generation with vcpkg integration.
+genbuild:
+	pemk genbuild
+
+delbuild:
+	pemk delbuild
+
+build:
+	pemk build
+
+run:
+	pemk run coll_test
 
 clean:
-	rm -f src/*.o
-	rm -f src/*.so
-	rm -f test/*.o
-	rm -f test/test_all
-
-run_tests:
-	export LD_LIBRARY_PATH=$$LD_LIBRARY_PATH:./src; ./test/test_all
-
-.PHONY: src test run_tests
+	pemk clean
