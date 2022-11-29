@@ -16,6 +16,9 @@ set ( COLL_VERSION_MAJOR 0 )
 set ( COLL_VERSION_MINOR 1 )
 set ( COLL_VERSION_PATCH 0 )
 
+# https://stackoverflow.com/a/47260387/9483968
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 # Lists
 # Setup the list of source files
 set( COLL_SOURCES 
