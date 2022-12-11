@@ -24,6 +24,7 @@ extern "C" {
 #endif //APR_ENABLED
 
 /**
+ * @file arraylist.h
 * ArrayList: This is a datastructure which implements the
 * abstract datatype (ADT) list, using a fixed length array.
 * The internal array is resized when it reaches capacity, and
