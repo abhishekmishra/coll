@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "test_lualib_arraylist.h"
-#include "test_arraylist.h"
-#include "arraylist.h"
+#include "test_coll_lualib_arraylist.h"
+#include "test_coll_arraylist.h"
+#include "coll_arraylist.h"
 
 #include <lua.h>
 #include <lauxlib.h>

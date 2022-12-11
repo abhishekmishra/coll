@@ -1,4 +1,4 @@
-#include "arraylist.h"
+#include "coll_arraylist.h"
 
 #ifdef LUA_ENABLED
 

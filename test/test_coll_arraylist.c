@@ -12,8 +12,8 @@
 
 #endif //APR_ENABLED
 
-#include "test_arraylist.h"
-#include "arraylist.h"
+#include "test_coll_arraylist.h"
+#include "coll_arraylist.h"
 
 static arraylist* intptrlist0;
 

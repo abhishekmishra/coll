@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "test_arraylist.h"
-#include "test_lualib_arraylist.h"
+#include "test_coll_arraylist.h"
+#include "test_coll_lualib_arraylist.h"
 
 #ifdef LUA_ENABLED
 #include "test_coll_arraylist_map.h"

@@ -5,21 +5,21 @@ LIB=-L../src -lcoll `pkg-config --libs cmocka` $(if $(LUA_ENABLED), `pkg-config 
 
 all: test_all
 
-test_all: test_all.o test_arraylist.o test_coll_arraylist_map.o  $(if $(LUA_ENABLED), test_lualib_arraylist.o)
-	gcc test_all.o test_arraylist.o test_coll_arraylist_map.o ${LIB} $(if $(LUA_ENABLED), test_lualib_arraylist.o) -o test_all
+test_all: test_all.o test_coll_arraylist.o test_coll_arraylist_map.o  $(if $(LUA_ENABLED), test_coll_lualib_arraylist.o)
+	gcc test_all.o test_coll_arraylist.o test_coll_arraylist_map.o ${LIB} $(if $(LUA_ENABLED), test_coll_lualib_arraylist.o) -o test_all
 
 test_all.o: test_all.c 
 	gcc -c test_all.c ${CFLAGS} -o test_all.o
 
-test_arraylist.o: test_arraylist.c test_arraylist.h
-	gcc -c test_arraylist.c ${CFLAGS} -o test_arraylist.o
+test_coll_arraylist.o: test_coll_arraylist.c test_coll_arraylist.h
+	gcc -c test_coll_arraylist.c ${CFLAGS} -o test_coll_arraylist.o
 
 test_coll_arraylist_map.o: test_coll_arraylist_map.c test_coll_arraylist_map.h
 	gcc -c test_coll_arraylist_map.c ${CFLAGS} -o test_coll_arraylist_map.o
 
 ifdef LUA_ENABLED
-test_lualib_arraylist.o: test_lualib_arraylist.c test_lualib_arraylist.h
-	gcc -c test_lualib_arraylist.c $(CFLAGS) -o test_lualib_arraylist.o
+test_coll_lualib_arraylist.o: test_coll_lualib_arraylist.c test_coll_lualib_arraylist.h
+	gcc -c test_coll_lualib_arraylist.c $(CFLAGS) -o test_coll_lualib_arraylist.o
 endif
 
 clean:

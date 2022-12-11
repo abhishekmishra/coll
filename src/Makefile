@@ -5,18 +5,18 @@ CFLAGS=			-Wall -fpic $(if $(LUA_ENABLED),`pkg-config --cflags lua5.3` -D LUA_EN
 
 all: 			libcoll.so
 
-libcoll.so: 		arraylist.o coll_arraylist_map.o $(if $(LUA_ENABLED), lualib_arraylist.o)
-	gcc $(LIBS) -o libcoll.so arraylist.o coll_arraylist_map.o $(if $(LUA_ENABLED), lualib_arraylist.o)
+libcoll.so: 		coll_arraylist.o coll_arraylist_map.o $(if $(LUA_ENABLED), coll_lualib_arraylist.o)
+	gcc $(LIBS) -o libcoll.so coll_arraylist.o coll_arraylist_map.o $(if $(LUA_ENABLED), coll_lualib_arraylist.o)
 
-arraylist.o: 	arraylist.c arraylist.h
-	gcc -c arraylist.c $(CFLAGS) -o arraylist.o
+coll_arraylist.o: 	coll_arraylist.c coll_arraylist.h
+	gcc -c coll_arraylist.c $(CFLAGS) -o coll_arraylist.o
 
 coll_arraylist_map.o: coll_arraylist_map.c coll_arraylist_map.h
 	gcc -c coll_arraylist_map.c $(CFLAGS) -o coll_arraylist_map.o
 
 ifdef LUA_ENABLED
-lualib_arraylist.o: lualib_arraylist.c
-	gcc -c lualib_arraylist.c $(CFLAGS) -o lualib_arraylist.o
+coll_lualib_arraylist.o: coll_lualib_arraylist.c
+	gcc -c coll_lualib_arraylist.c $(CFLAGS) -o coll_lualib_arraylist.o
 endif
 
 clean:

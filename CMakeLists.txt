@@ -22,16 +22,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Lists
 # Setup the list of source files
 set( COLL_SOURCES 
-  src/arraylist.h
-  src/arraylist.c
+  src/coll_arraylist.h
+  src/coll_arraylist.c
   src/coll_arraylist_map.h
   src/coll_arraylist_map.c
 )
 
 set( COLL_TEST_SOURCES 
   test/test_all.c
-  test/test_arraylist.h
-  test/test_arraylist.c
+  test/test_coll_arraylist.h
+  test/test_coll_arraylist.c
   test/test_coll_arraylist_map.h
   test/test_coll_arraylist_map.c
 )
@@ -50,7 +50,7 @@ if (ENABLE_LUA)
     message("-- lua version is ${LUA_VERSION_STRING}")
     add_compile_definitions(LUA_ENABLED)
     set( COLL_SOURCES ${COLL_SOURCES}
-      src/lualib_arraylist.c
+      src/coll_lualib_arraylist.c
     )
   endif (LUA_FOUND)
 endif (ENABLE_LUA)
@@ -73,8 +73,8 @@ if (ENABLE_TESTS)
   if (ENABLE_LUA)
     if (LUA_FOUND)
       set( COLL_TEST_SOURCES ${COLL_TEST_SOURCES}
-        test/test_lualib_arraylist.c
-        test/test_lualib_arraylist.h
+        test/test_coll_lualib_arraylist.c
+        test/test_coll_lualib_arraylist.h
       )   
     endif (LUA_FOUND)
   endif (ENABLE_LUA)

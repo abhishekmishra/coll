@@ -1,5 +1,5 @@
 #include <limits.h>
-#include "arraylist.h"
+#include "coll_arraylist.h"
 #include <stdio.h>
 
 int arraylist_new(arraylist **l, arraylist_free_function *free_fn)

@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include "arraylist.h"
+#include "coll_arraylist.h"
 #include <stdbool.h>
 
 #define COLL_AL_MAP_DEFAULT_CAPACITY 25
