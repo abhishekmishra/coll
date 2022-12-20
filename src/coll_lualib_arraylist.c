@@ -13,17 +13,17 @@ void set_lua_convertor(arraylist* l, arraylist_item_to_lua_object* convert_to_lu
 	}
 }
 
-extern void convert_to_lua_array(arraylist* list, lua_State* L) {
+void convert_to_lua_array(arraylist* list, lua_State* L) {
 	if (list->convert_to_lua == NULL) {
 		return;
 	}
 	else {
 		size_t len = arraylist_length(list);
 		//printf("convert array of length %d\n", len);
-		lua_createtable(L, len, 0);
+		lua_createtable(L, (int)len, 0);
 		for (size_t i = 0; i < len; i++) {
 			//printf("convert value @ %uL\n", i);
-			list->convert_to_lua(L, i, arraylist_get(list, i));
+			list->convert_to_lua(L, (int)i, arraylist_get(list, i));
 			lua_seti(L, -2, i+1);
 		}
 	}
