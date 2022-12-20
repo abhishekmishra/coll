@@ -24,7 +24,7 @@ extern "C" {
 #endif //APR_ENABLED
 
 /**
- * @file arraylist.h
+ * @file coll_arraylist.h
 * ArrayList: This is a datastructure which implements the
 * abstract datatype (ADT) list, using a fixed length array.
 * The internal array is resized when it reaches capacity, and
@@ -97,7 +97,7 @@ typedef struct arraylist_t {
 * @param free the function used to free the items in the arraylist
 * @return value indicating success or failure (0 is success)
 **/
-extern int arraylist_new(arraylist** l, arraylist_free_function* free_fn);
+int arraylist_new(arraylist** l, arraylist_free_function* free_fn);
 
 /**
 * Create a new arraylist with the specified initial capacity.
@@ -107,7 +107,7 @@ extern int arraylist_new(arraylist** l, arraylist_free_function* free_fn);
 * @param free the function used to free the items in the arraylist
 * @return value indicating success or falilure (0 is success)
 **/
-extern int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_function* free_fn);
+int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist_free_function* free_fn);
 
 #ifdef LUA_ENABLED
 
@@ -117,7 +117,7 @@ extern int arraylist_new_with_capacity(arraylist** l, size_t capacity, arraylist
  * @param l the arraylist
  * @param convert_to_lua the conversion function.
  **/
-extern void set_lua_convertor(arraylist* l, arraylist_item_to_lua_object* convert_to_lua);
+void set_lua_convertor(arraylist* l, arraylist_item_to_lua_object* convert_to_lua);
 
 /**
  * Convert the given arraylist to a lua array.
@@ -126,7 +126,7 @@ extern void set_lua_convertor(arraylist* l, arraylist_item_to_lua_object* conver
  * @param list the arraylist
  * @param L the lua_State
  */
-extern void convert_to_lua_array(arraylist* list, lua_State* L);
+void convert_to_lua_array(arraylist* list, lua_State* L);
 
 #endif //LUA_ENABLED
 
@@ -136,7 +136,7 @@ extern void convert_to_lua_array(arraylist* list, lua_State* L);
 * @param l the arraylist
 * @return length/size of the array.
 **/
-extern size_t arraylist_length(arraylist* l);
+size_t arraylist_length(arraylist* l);
 
 /**
 * Insert item at location loc of the arraylist.
@@ -155,7 +155,7 @@ extern size_t arraylist_length(arraylist* l);
 * @param item item to insert
 * @return error code
 **/
-extern int arraylist_insert(arraylist* l, size_t loc, void* item);
+int arraylist_insert(arraylist* l, size_t loc, void* item);
 
 /**
 * Insert an item at the end of the arraylist
@@ -169,7 +169,7 @@ extern int arraylist_insert(arraylist* l, size_t loc, void* item);
 * @param item item to insert
 * @return error code
 **/
-extern int arraylist_add(arraylist* l, void* item);
+int arraylist_add(arraylist* l, void* item);
 
 /**
 * Set the item at location loc of the arraylist.
@@ -183,7 +183,7 @@ extern int arraylist_add(arraylist* l, void* item);
 * @param item item to insert
 * @return error code
 **/
-extern int arraylist_set(arraylist* l, size_t loc, void* item);
+int arraylist_set(arraylist* l, size_t loc, void* item);
 
 /**
 * Get the item at location loc of the arraylist.
@@ -193,14 +193,14 @@ extern int arraylist_set(arraylist* l, size_t loc, void* item);
 * @param loc location to insert at
 * @return item
 **/
-extern void* arraylist_get(arraylist* l, size_t loc);
+void* arraylist_get(arraylist* l, size_t loc);
 
 /**
 * Clear the array of all elements, but do not de-allocate.
 * 
 * @param l the arraylist
 **/
-extern void arraylist_clear(arraylist* l);
+void arraylist_clear(arraylist* l);
 
 /**
 * Deletes the item at location loc of the arraylist.
@@ -210,7 +210,7 @@ extern void arraylist_clear(arraylist* l);
 * @param loc location to delete at
 * @return item the deleted item (NULL if unable to delete or value was NULL)
 **/
-extern int arraylist_delete(arraylist* l, size_t loc);
+int arraylist_delete(arraylist* l, size_t loc);
 
 /** 
 * Free the arraylist.
@@ -218,7 +218,7 @@ extern int arraylist_delete(arraylist* l, size_t loc);
 *
 * @param l the arraylist
 **/
-extern void arraylist_free(arraylist* l);
+void arraylist_free(arraylist* l);
 
 //TODO: reconsider function to return string, instead of print
 /**
@@ -227,13 +227,13 @@ extern void arraylist_free(arraylist* l);
 * @param item_print fn pointer which prints a single item
 * @return void
 **/
-extern void arraylist_print(arraylist* l, void (*item_print)(void* item));
+void arraylist_print(arraylist* l, void (*item_print)(void* item));
 
 #ifdef APR_ENABLED
 
-extern int arraylist_apr_new(arraylist** l, apr_pool_t* pool, arraylist_free_function* free_fn);
-extern int arraylist_apr_new_with_capacity(arraylist** l, apr_pool_t* pool, size_t capacity, arraylist_free_function* free_fn);
-extern void arraylist_apr_free(arraylist* l);
+int arraylist_apr_new(arraylist** l, apr_pool_t* pool, arraylist_free_function* free_fn);
+int arraylist_apr_new_with_capacity(arraylist** l, apr_pool_t* pool, size_t capacity, arraylist_free_function* free_fn);
+void arraylist_apr_free(arraylist* l);
 
 #endif //APR_ENABLED
 
