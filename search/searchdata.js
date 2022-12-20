@@ -2,20 +2,29 @@ var indexSectionsWithContent =
 {
   0: "ac",
   1: "ac",
-  2: "c"
+  2: "c",
+  3: "a",
+  4: "a",
+  5: "c"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "pages"
+  2: "files",
+  3: "functions",
+  4: "typedefs",
+  5: "pages"
 };
 
 var indexSectionLabels =
 {
   0: "All",
   1: "Data Structures",
-  2: "Pages"
+  2: "Files",
+  3: "Functions",
+  4: "Typedefs",
+  5: "Pages"
 };
 
