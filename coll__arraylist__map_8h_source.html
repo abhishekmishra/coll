@@ -71,66 +71,74 @@ $(function() {
 <div class="title">coll_arraylist_map.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef ___COLL_AL_MAP_H___</span></div>
+<a href="coll__arraylist__map_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef ___COLL_AL_MAP_H___</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define ___COLL_AL_MAP_H___</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#ifdef __cplusplus  </span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="coll__arraylist_8h.html">coll_arraylist.h</a>&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define COLL_AL_MAP_DEFAULT_CAPACITY 25</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_ALLOC_FAILED 10</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_NULL 11</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_ALREADY_EXISTS 12</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_KEY_NULL 13</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_COMPARE_FN_NULL 15</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_SUCCESS 0</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">typedef</span> int (coll_al_map_compare_fn) (<span class="keywordtype">void</span>* first, <span class="keywordtype">void</span>* second);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="coll__arraylist_8h.html">coll_arraylist.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">typedef</span> void (coll_al_map_iter_fn)(<span class="keywordtype">size_t</span> index, <span class="keywordtype">void</span>* key, <span class="keywordtype">void</span>* value);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structcoll__al__map__t.html">   23</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structcoll__al__map__t.html">coll_al_map_t</a> {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    coll_al_map_compare_fn* compare;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">size_t</span> size;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="structarraylist__t.html">arraylist</a>* keys;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="structarraylist__t.html">arraylist</a>* values;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;} <a class="code" href="structcoll__al__map__t.html">coll_al_map</a>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define coll_al_map_keys(map)               map-&gt;keys</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define coll_al_map_keys_length(map)        arraylist_length(coll_al_map_keys(map))</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define coll_al_map_keys_get_idx(map, i)    arraylist_get(coll_al_map_keys(map), i)</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define coll_al_map_values(map)             map-&gt;values</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define coll_al_map_values_length(map)      arraylist_length(coll_al_map_values(map))</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#define coll_al_map_values_get_idx(map, i)  arraylist_get(coll_al_map_values(map), i)</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* make_coll_al_map(coll_al_map_compare_fn* compare);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* make_coll_al_map_w_capacity(coll_al_map_compare_fn* compare, <span class="keywordtype">size_t</span> initial_capacity);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">int</span> coll_al_map_put(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, <span class="keywordtype">void</span>* key, <span class="keywordtype">void</span>* val);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keywordtype">void</span>* coll_al_map_get(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, <span class="keywordtype">void</span>* key);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define COLL_AL_MAP_DEFAULT_CAPACITY 25</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_ALLOC_FAILED 10</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_NULL 11</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_ALREADY_EXISTS 12</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_KEY_NULL 13</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_COMPARE_FN_NULL 15</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define E_COLL_AL_MAP_SUCCESS 0</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">typedef</span> int (coll_al_map_compare_fn) (<span class="keywordtype">void</span>* first, <span class="keywordtype">void</span>* second);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">typedef</span> void (coll_al_map_iter_fn)(<span class="keywordtype">size_t</span> index, <span class="keywordtype">void</span>* key, <span class="keywordtype">void</span>* value);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structcoll__al__map__t.html">   33</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structcoll__al__map__t.html">coll_al_map_t</a> {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    coll_al_map_compare_fn* compare;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">size_t</span> size;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="structarraylist__t.html">arraylist</a>* keys;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="structarraylist__t.html">arraylist</a>* values;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;} <a class="code" href="structcoll__al__map__t.html">coll_al_map</a>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define coll_al_map_keys(map)               map-&gt;keys</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define coll_al_map_keys_length(map)        arraylist_length(coll_al_map_keys(map))</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#define coll_al_map_keys_get_idx(map, i)    arraylist_get(coll_al_map_keys(map), i)</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define coll_al_map_values(map)             map-&gt;values</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define coll_al_map_values_length(map)      arraylist_length(coll_al_map_values(map))</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define coll_al_map_values_get_idx(map, i)  arraylist_get(coll_al_map_values(map), i)</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* <a class="code" href="coll__arraylist__map_8h.html#ad5fb1804a7f7d1868269d749529708e9">make_coll_al_map</a>(coll_al_map_compare_fn* compare);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* <a class="code" href="coll__arraylist__map_8h.html#a271ffbe6bf21336feaac84c8f0f0f389">make_coll_al_map_w_capacity</a>(coll_al_map_compare_fn* compare, <span class="keywordtype">size_t</span> initial_capacity);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keywordtype">int</span> <a class="code" href="coll__arraylist__map_8h.html#adba6aee4ce9967163033be3dc11f1e9f">coll_al_map_put</a>(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, <span class="keywordtype">void</span>* key, <span class="keywordtype">void</span>* val);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keywordtype">bool</span> coll_al_map_remove(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, <span class="keywordtype">void</span>* key, coll_al_map_iter_fn* iter_fn);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">bool</span> coll_al_map_has(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, <span class="keywordtype">void</span>* key);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keywordtype">void</span> free_coll_al_map(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keywordtype">void</span> coll_al_map_foreach_fn(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, coll_al_map_iter_fn* iter_fn);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#ifdef __cplusplus </span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ___COLL_AL_MAP_H___ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keywordtype">void</span>* <a class="code" href="coll__arraylist__map_8h.html#a8b7bf7795e76a2420f4a6773edc5dcae">coll_al_map_get</a>(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, <span class="keywordtype">void</span>* key);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="coll__arraylist__map_8h.html#ab1e3593a1489ccc841b2b721abc35ad8">coll_al_map_remove</a>(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, <span class="keywordtype">void</span>* key, coll_al_map_iter_fn* iter_fn);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="coll__arraylist__map_8h.html#a2fc46017c9bd23220ef0045bdfb4fbd5">coll_al_map_has</a>(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, <span class="keywordtype">void</span>* key);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keywordtype">void</span> <a class="code" href="coll__arraylist__map_8h.html#a119c724f80d3c184601de9b5cb8a3794">free_coll_al_map</a>(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keywordtype">void</span> <a class="code" href="coll__arraylist__map_8h.html#aaeef1fd278ec3b65b424aa5d77c6d29a">coll_al_map_foreach_fn</a>(<a class="code" href="structcoll__al__map__t.html">coll_al_map</a>* map, coll_al_map_iter_fn* iter_fn);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#ifdef __cplusplus </span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ___COLL_AL_MAP_H___ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="acoll__arraylist_8h_html"><div class="ttname"><a href="coll__arraylist_8h.html">coll_arraylist.h</a></div></div>
+<div class="ttc" id="acoll__arraylist__map_8h_html_a119c724f80d3c184601de9b5cb8a3794"><div class="ttname"><a href="coll__arraylist__map_8h.html#a119c724f80d3c184601de9b5cb8a3794">free_coll_al_map</a></div><div class="ttdeci">void free_coll_al_map(coll_al_map *map)</div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.c:110</div></div>
+<div class="ttc" id="acoll__arraylist__map_8h_html_a271ffbe6bf21336feaac84c8f0f0f389"><div class="ttname"><a href="coll__arraylist__map_8h.html#a271ffbe6bf21336feaac84c8f0f0f389">make_coll_al_map_w_capacity</a></div><div class="ttdeci">coll_al_map * make_coll_al_map_w_capacity(coll_al_map_compare_fn *compare, size_t initial_capacity)</div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.c:8</div></div>
+<div class="ttc" id="acoll__arraylist__map_8h_html_a2fc46017c9bd23220ef0045bdfb4fbd5"><div class="ttname"><a href="coll__arraylist__map_8h.html#a2fc46017c9bd23220ef0045bdfb4fbd5">coll_al_map_has</a></div><div class="ttdeci">bool coll_al_map_has(coll_al_map *map, void *key)</div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.c:100</div></div>
+<div class="ttc" id="acoll__arraylist__map_8h_html_a8b7bf7795e76a2420f4a6773edc5dcae"><div class="ttname"><a href="coll__arraylist__map_8h.html#a8b7bf7795e76a2420f4a6773edc5dcae">coll_al_map_get</a></div><div class="ttdeci">void * coll_al_map_get(coll_al_map *map, void *key)</div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.c:56</div></div>
+<div class="ttc" id="acoll__arraylist__map_8h_html_aaeef1fd278ec3b65b424aa5d77c6d29a"><div class="ttname"><a href="coll__arraylist__map_8h.html#aaeef1fd278ec3b65b424aa5d77c6d29a">coll_al_map_foreach_fn</a></div><div class="ttdeci">void coll_al_map_foreach_fn(coll_al_map *map, coll_al_map_iter_fn *iter_fn)</div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.c:118</div></div>
+<div class="ttc" id="acoll__arraylist__map_8h_html_ab1e3593a1489ccc841b2b721abc35ad8"><div class="ttname"><a href="coll__arraylist__map_8h.html#ab1e3593a1489ccc841b2b721abc35ad8">coll_al_map_remove</a></div><div class="ttdeci">bool coll_al_map_remove(coll_al_map *map, void *key, coll_al_map_iter_fn *iter_fn)</div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.c:79</div></div>
+<div class="ttc" id="acoll__arraylist__map_8h_html_ad5fb1804a7f7d1868269d749529708e9"><div class="ttname"><a href="coll__arraylist__map_8h.html#ad5fb1804a7f7d1868269d749529708e9">make_coll_al_map</a></div><div class="ttdeci">coll_al_map * make_coll_al_map(coll_al_map_compare_fn *compare)</div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.c:4</div></div>
+<div class="ttc" id="acoll__arraylist__map_8h_html_adba6aee4ce9967163033be3dc11f1e9f"><div class="ttname"><a href="coll__arraylist__map_8h.html#adba6aee4ce9967163033be3dc11f1e9f">coll_al_map_put</a></div><div class="ttdeci">int coll_al_map_put(coll_al_map *map, void *key, void *val)</div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.c:33</div></div>
 <div class="ttc" id="astructarraylist__t_html"><div class="ttname"><a href="structarraylist__t.html">arraylist_t</a></div><div class="ttdef"><b>Definition:</b> coll_arraylist.h:80</div></div>
-<div class="ttc" id="astructcoll__al__map__t_html"><div class="ttname"><a href="structcoll__al__map__t.html">coll_al_map_t</a></div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.h:23</div></div>
+<div class="ttc" id="astructcoll__al__map__t_html"><div class="ttname"><a href="structcoll__al__map__t.html">coll_al_map_t</a></div><div class="ttdef"><b>Definition:</b> coll_arraylist_map.h:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
