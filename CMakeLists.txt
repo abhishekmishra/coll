@@ -1,6 +1,6 @@
 cmake_minimum_required ( VERSION 3.9 )
 
-project ( coll C )
+project ( coll VERSION 0.1.0 LANGUAGES C )
 
 # Export all symbols for shared linking to work on windows
 # see https://stackoverflow.com/questions/37128555/getting-cmake-to-build-shared-library-for-msvc
