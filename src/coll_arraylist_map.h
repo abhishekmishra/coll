@@ -5,6 +5,16 @@
 extern "C" {
 #endif
 
+/**
+ * @file coll_arraylist_map.h
+* AL_MAP: This is a datastructure which provides
+* a naive implementation for a Map/Dictionary, backed
+* by the ArrayList datastructure implemented in the same
+* library.
+*
+*
+**/
+
 #include "coll_arraylist.h"
 #include <stdbool.h>
 

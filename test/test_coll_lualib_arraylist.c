@@ -51,8 +51,6 @@ static int group_setup(void **state)
 	L = luaL_newstate();
 	luaL_openlibs(L);
 
-	int methods;
-
     //Expose the c_swap function to the lua environment
     lua_pushcfunction(L, get_random_ints);
     lua_setglobal(L, "get_random_ints");
