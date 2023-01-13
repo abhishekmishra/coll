@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['coll_13',['coll',['../index.html',1,'']]],
+  ['coll_20documentation_13',['Coll Documentation',['../index.html',1,'']]],
   ['coll_5fal_5fmap_5fforeach_5ffn_14',['coll_al_map_foreach_fn',['../coll__arraylist__map_8h.html#aaeef1fd278ec3b65b424aa5d77c6d29a',1,'coll_arraylist_map.c']]],
   ['coll_5fal_5fmap_5fget_15',['coll_al_map_get',['../coll__arraylist__map_8h.html#a8b7bf7795e76a2420f4a6773edc5dcae',1,'coll_arraylist_map.c']]],
   ['coll_5fal_5fmap_5fhas_16',['coll_al_map_has',['../coll__arraylist__map_8h.html#a2fc46017c9bd23220ef0045bdfb4fbd5',1,'coll_arraylist_map.c']]],
