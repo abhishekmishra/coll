@@ -1,6 +1,16 @@
 # CHANGELOG
 This file documents major changes in every release of the project. The project follows [Semantic Versioning](https://semver.org/). There is a section for each release - which lists major changes made in the release.
 
+**0.1.0-alpha.1**  2023-01-14 Abhishek Mishra  <abhishekmishra3@gmail.com>
+- This first release in 2023, incorporates a few minor changes in build and no 
+  new changes in functionality.
+- The CMakeLists.txt file now has variables for definition of the version.
+- The Doxyfile changes the docs build output to `build/docs` folder.
+- The toplevel README contains instructions on getting docs either online or in
+  a local build.
+- The `docs` folder now contains markdown documentation pages (currently just
+  the front page of documentation.)
+
 **0.1.0-alpha.0**  2022-11-12 Abhishek Mishra  <abhishekmishra3@gmail.com>
 
 - This is the first early alpha release of __coll__. __coll__ is a collections library written in ANSI C. It has been tested on Windows, Linux and Macos.
