@@ -7,7 +7,10 @@
         "stddef.h": "c",
         "test_arraylist.h": "c",
         "test_lualib_arraylist.h": "c",
-        "cmocka.h": "c"
+        "cmocka.h": "c",
+        "coll_arraylist.h": "c",
+        "apr.h": "c",
+        "apr_pools.h": "c"
     },
     "cmake.configureOnOpen": false
 }
