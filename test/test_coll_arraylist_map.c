@@ -12,7 +12,7 @@
 static coll_al_map* map;
 
 static int group_setup(void** state) {
-	map = make_coll_al_map(&strcmp);
+	map = make_coll_al_map((coll_al_map_compare_fn*)&strcmp);
 	if (map == NULL) {
 		return -1;
 	}
@@ -41,7 +41,7 @@ static int group_teardown(void** state) {
 
 static void test_coll_al_map_create_new(void** state) {
 	coll_al_map* test_map;
-	test_map = make_coll_al_map(&strcmp);
+	test_map = make_coll_al_map((coll_al_map_compare_fn*)&strcmp);
 	assert_non_null(test_map);
 	if (test_map != NULL) {
 		free_coll_al_map(test_map);
@@ -53,7 +53,7 @@ void print_k_v(size_t i, char* key, int* val) {
 }
 
 static void test_coll_al_map_foreach(void** state) {
-	coll_al_map_foreach_fn(map, &print_k_v);
+	coll_al_map_foreach_fn(map, (coll_al_map_iter_fn*)&print_k_v);
 	assert_int_equal(map->size, 5);
 }
 
@@ -64,8 +64,8 @@ void free_k_v(size_t i, char* key, int* val) {
 }
 
 static void test_coll_al_map_delete(void** state) {
-	coll_al_map_remove(map, "3", &free_k_v);
-	coll_al_map_foreach_fn(map, &print_k_v);
+	coll_al_map_remove(map, "3", (coll_al_map_iter_fn*)&free_k_v);
+	coll_al_map_foreach_fn(map, (coll_al_map_iter_fn*)&print_k_v);
 	assert_int_equal(map->size, 4);
 }
 
