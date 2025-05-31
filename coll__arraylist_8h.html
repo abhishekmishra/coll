@@ -265,15 +265,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Deletes the item at location loc of the arraylist. NOTE: Deleted item is not freed, user must free if needed.</p>
+<p>Deletes the item at location loc of the arraylist. If a <code>free_fn</code> was provided during list creation, the item at <code>loc</code> will be freed using that function. Otherwise, the pointer is removed from the list without freeing the underlying item (user remains responsible).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">l</td><td>the arraylist </td></tr>
-    <tr><td class="paramname">loc</td><td>location to delete at </td></tr>
+    <tr><td class="paramname">l</td><td>the arraylist. </td></tr>
+    <tr><td class="paramname">loc</td><td>location to delete at. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>item the deleted item (NULL if unable to delete or value was NULL) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, or an error code (e.g., E_ARRAYLIST_INDEX_NOT_FOUND) if the location is invalid. This function does not return the deleted item. </dd></dl>
 
 </div>
 </div>
