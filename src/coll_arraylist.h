@@ -204,11 +204,14 @@ void arraylist_clear(arraylist* l);
 
 /**
 * Deletes the item at location loc of the arraylist.
-* NOTE: Deleted item is not freed, user must free if needed.
+* If a `free_fn` was provided during list creation, the item at `loc`
+* will be freed using that function. Otherwise, the pointer is removed
+* from the list without freeing the underlying item (user remains responsible).
 *
-* @param l the arraylist
-* @param loc location to delete at
-* @return item the deleted item (NULL if unable to delete or value was NULL)
+* @param l the arraylist.
+* @param loc location to delete at.
+* @return 0 on success, or an error code (e.g., E_ARRAYLIST_INDEX_NOT_FOUND) if
+*         the location is invalid. This function does not return the deleted item.
 **/
 int arraylist_delete(arraylist* l, size_t loc);
 

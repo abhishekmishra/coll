@@ -96,7 +96,8 @@ int arraylist_apr_new_with_capacity(arraylist **l, apr_pool_t *pool, size_t capa
 	list->array = (void **)apr_pcalloc(pool, sizeof(void *) * list->capacity);
 	if (list->array == NULL)
 	{
-		free(list);
+		// 'list' is allocated from the APR pool, so no need to free it here.
+		// It will be cleaned up when the pool is destroyed.
 		return E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY;
 	}
 
@@ -175,7 +176,11 @@ int arraylist_resize(arraylist *l, size_t max)
 			{
 				return E_ARRAYLIST_UNABLE_TO_ALLOCATE_ARRAY;
 			}
-			memcpy(new_array, l->array, l->capacity * sizeof(void *));
+		// Only copy the valid elements from the old array.
+		// The number of valid elements is l->size, not l->capacity.
+		if (l->array != NULL && l->size > 0) { // Ensure there's something to copy
+		    memcpy(new_array, l->array, l->size * sizeof(void *));
+		}
 			l->array = new_array;
 			l->capacity = new_capacity;
 			// old array need not be freed as it will be removed
